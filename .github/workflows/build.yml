@@ -1,0 +1,368 @@
+name: Build All Packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Target branch name'
+        required: true
+
+
+jobs:
+
+  Build_For_Win64_38:
+
+    runs-on: windows-2022
+    timeout-minutes: 5
+
+    steps:
+      - uses: git9527/clean-up-action@v1
+      - name: Checkout source code
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ vars.MY_REPO }}
+          ssh-key: ${{ secrets.SSH_KEY }}
+          ref: ${{ github.event.inputs.branch }}
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+          cache: 'pip'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run tests
+        run: |
+          cd ultimate-template-addon
+          pytest lib
+      - name: Build binaries
+        run: sh common-github-build.sh "pyd" "WindowsAMD6438"
+
+      - name: Set up Aliyun OSS
+        uses: yizhoumo/setup-ossutil@v1
+        with:
+          endpoint: oss-cn-shanghai.aliyuncs.com
+          access-key-id: ${{ secrets.OSS_KEY_ID }}
+          access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
+
+      - name: Sync file to oss
+        run: ossutil sync output-binary/${{ env.ADDON_PLATFORM }} oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }} --delete --force
+
+  Build_For_Win64_39:
+
+    runs-on: windows-2022
+    timeout-minutes: 5
+
+    steps:
+      - uses: git9527/clean-up-action@v1
+      - name: Checkout source code
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ vars.MY_REPO }}
+          ssh-key: ${{ secrets.SSH_KEY }}
+          ref: ${{ github.event.inputs.branch }}
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          cache: 'pip'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run tests
+        run: |
+          cd ultimate-template-addon
+          pytest lib
+      - name: Build binaries
+        run: sh common-github-build.sh "pyd" "WindowsAMD6439"
+
+      - name: Set up Aliyun OSS
+        uses: yizhoumo/setup-ossutil@v1
+        with:
+          endpoint: oss-cn-shanghai.aliyuncs.com
+          access-key-id: ${{ secrets.OSS_KEY_ID }}
+          access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
+
+      - name: Sync file to oss
+        run: ossutil sync output-binary/${{ env.ADDON_PLATFORM }} oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }} --delete --force
+
+  Build_For_Win32_38:
+
+    runs-on: windows-2022
+    timeout-minutes: 8
+
+    steps:
+      - uses: git9527/clean-up-action@v1
+      - name: Checkout source code
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ vars.MY_REPO }}
+          ssh-key: ${{ secrets.SSH_KEY }}
+          ref: ${{ github.event.inputs.branch }}
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+          cache: 'pip'
+          architecture: 'x86'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run tests
+        run: |
+          cd ultimate-template-addon
+          pytest lib
+      - name: Build binaries
+        run: sh common-github-build.sh "pyd" "WindowsX8638"
+
+      - name: Set up Aliyun OSS
+        uses: yizhoumo/setup-ossutil@v1
+        with:
+          endpoint: oss-cn-shanghai.aliyuncs.com
+          access-key-id: ${{ secrets.OSS_KEY_ID }}
+          access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
+
+      - name: Sync file to oss
+        run: ossutil sync output-binary/${{ env.ADDON_PLATFORM }} oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }} --delete --force
+
+  Build_For_Ubuntu_38:
+
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+
+    steps:
+      - uses: git9527/clean-up-action@v1
+      - name: Checkout source code
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ vars.MY_REPO }}
+          ssh-key: ${{ secrets.SSH_KEY }}
+          ref: ${{ github.event.inputs.branch }}
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+          cache: 'pip'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run tests
+        run: |
+          cd ultimate-template-addon
+          pytest lib
+      - name: Build binaries
+        run: sh common-github-build.sh "so" "LinuxX6438"
+
+      - name: Set up Aliyun OSS
+        uses: yizhoumo/setup-ossutil@v1
+        with:
+          endpoint: oss-cn-shanghai.aliyuncs.com
+          access-key-id: ${{ secrets.OSS_KEY_ID }}
+          access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
+
+      - name: Sync file to oss
+        run: ossutil sync output-binary/${{ env.ADDON_PLATFORM }} oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }} --delete --force
+
+  Build_For_Ubuntu_39:
+
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+
+    steps:
+      - uses: git9527/clean-up-action@v1
+      - name: Checkout source code
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ vars.MY_REPO }}
+          ssh-key: ${{ secrets.SSH_KEY }}
+          ref: ${{ github.event.inputs.branch }}
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          cache: 'pip'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run tests
+        run: |
+          cd ultimate-template-addon
+          pytest lib
+      - name: Build binaries
+        run: sh common-github-build.sh "so" "LinuxX6439"
+
+      - name: Set up Aliyun OSS
+        uses: yizhoumo/setup-ossutil@v1
+        with:
+          endpoint: oss-cn-shanghai.aliyuncs.com
+          access-key-id: ${{ secrets.OSS_KEY_ID }}
+          access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
+
+      - name: Sync file to oss
+        run: ossutil sync output-binary/${{ env.ADDON_PLATFORM }} oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }} --delete --force
+
+  Build_For_Ubuntu_311:
+
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+
+    steps:
+      - uses: git9527/clean-up-action@v1
+      - name: Checkout source code
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ vars.MY_REPO }}
+          ssh-key: ${{ secrets.SSH_KEY }}
+          ref: ${{ github.event.inputs.branch }}
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run tests
+        run: |
+          cd ultimate-template-addon
+          pytest lib
+      - name: Build binaries
+        run: sh common-github-build.sh "so" "LinuxX64311"
+
+      - name: Set up Aliyun OSS
+        uses: yizhoumo/setup-ossutil@v1
+        with:
+          endpoint: oss-cn-shanghai.aliyuncs.com
+          access-key-id: ${{ secrets.OSS_KEY_ID }}
+          access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
+
+      - name: Sync file to oss
+        run: ossutil sync output-binary/${{ env.ADDON_PLATFORM }} oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }} --delete --force
+
+  Build_For_Mac_38:
+
+    runs-on: macos-12
+    timeout-minutes: 5
+
+    steps:
+      - uses: git9527/clean-up-action@v1
+      - name: Checkout source code
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ vars.MY_REPO }}
+          ssh-key: ${{ secrets.SSH_KEY }}
+          ref: ${{ github.event.inputs.branch }}
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+          cache: 'pip'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run tests
+        run: |
+          cd ultimate-template-addon
+          pytest lib
+      - name: Build binaries
+        run: sh common-github-build-mac.sh "so" "DarwinX6438"
+
+      - name: Set up Aliyun OSS
+        uses: yizhoumo/setup-ossutil@v1
+        with:
+          endpoint: oss-cn-shanghai.aliyuncs.com
+          access-key-id: ${{ secrets.OSS_KEY_ID }}
+          access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
+
+      - name: Sync file to oss
+        run: ossutil sync output-binary/${{ env.ADDON_PLATFORM }} oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }} --delete --force
+
+
+  Build_For_Mac_39:
+
+    runs-on: macos-12
+    timeout-minutes: 5
+
+    steps:
+      - uses: git9527/clean-up-action@v1
+      - name: Checkout source code
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ vars.MY_REPO }}
+          ssh-key: ${{ secrets.SSH_KEY }}
+          ref: ${{ github.event.inputs.branch }}
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          cache: 'pip'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run tests
+        run: |
+          cd ultimate-template-addon
+          pytest lib
+      - name: Build binaries
+        run: sh common-github-build-mac.sh "so" "DarwinX6439"
+
+      - name: Set up Aliyun OSS
+        uses: yizhoumo/setup-ossutil@v1
+        with:
+          endpoint: oss-cn-shanghai.aliyuncs.com
+          access-key-id: ${{ secrets.OSS_KEY_ID }}
+          access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
+
+      - name: Sync file to oss
+        run: ossutil sync output-binary/${{ env.ADDON_PLATFORM }} oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }} --delete --force
+
+  Build_For_Root:
+
+    runs-on: ubuntu-22.04
+    timeout-minutes: 3
+
+    steps:
+      - uses: git9527/clean-up-action@v1
+      - name: Checkout source code
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ vars.MY_REPO }}
+          ssh-key: ${{ secrets.SSH_KEY }}
+          ref: ${{ github.event.inputs.branch }}
+
+      - name: Build internal root
+        run: sh common-github-build-root.sh "root"
+
+      - name: Set up Aliyun OSS
+        uses: yizhoumo/setup-ossutil@v1
+        with:
+          endpoint: oss-cn-shanghai.aliyuncs.com
+          access-key-id: ${{ secrets.OSS_KEY_ID }}
+          access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
+
+      - name: Sync file to oss
+        run: ossutil sync output-binary/${{ env.ADDON_PLATFORM }} oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }} --delete --force
+
+  Build_For_Root_Global:
+
+    runs-on: ubuntu-22.04
+    timeout-minutes: 3
+
+    steps:
+      - uses: git9527/clean-up-action@v1
+      - name: Checkout source code
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ vars.MY_REPO }}
+          ssh-key: ${{ secrets.SSH_KEY }}
+          ref: ${{ github.event.inputs.branch }}
+
+      - name: Build global root
+        run: |
+          sed -i "s@终极插件已更新，请重启Anki后生效@Ultimate Addon has been updated, please restart Anki@g" ultimate-template-addon/__init__.py
+          sed -i "s@https://template.anki.zhangsn.me/addon/activation?mode=0@https://ankiultimate.github.io/main.json@g" ultimate-template-addon/__init__.py
+          sed -i "s@暂未支持的平台@Unsupported platform@g" ultimate-template-addon/__init__.py
+          sed -i "s@联网检查更新失败，请确保网络正常后重试@Unable to check updates, please check your network and retry@g" ultimate-template-addon/__init__.py
+          sh common-github-build-root.sh "root-global"
+
+      - name: Set up Aliyun OSS
+        uses: yizhoumo/setup-ossutil@v1
+        with:
+          endpoint: oss-cn-shanghai.aliyuncs.com
+          access-key-id: ${{ secrets.OSS_KEY_ID }}
+          access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
+
+      - name: Sync file to oss
+        run: ossutil sync output-binary/${{ env.ADDON_PLATFORM }} oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }} --delete --force
