@@ -1,0 +1,40 @@
+name: Build Arm
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Target branch name'
+        required: true
+
+
+jobs:
+
+  Build_For_Arm:
+
+    runs-on: mac-arm
+    timeout-minutes: 5
+
+    steps:
+      - uses: git9527/clean-up-action@v1
+      - name: Checkout source code
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ vars.MY_REPO }}
+          ssh-key: ${{ secrets.SSH_KEY }}
+          ref: ${{ github.event.inputs.branch }}
+      - name: Install dependencies
+        run: /opt/homebrew/bin/pip3.9 install -r requirements.txt
+
+      - name: Build binaries
+        run: sh common-github-build-arm.sh "so" "DarwinArm6439"
+
+      - name: Set up Aliyun OSS
+        uses: yizhoumo/setup-ossutil@v1
+        with:
+          endpoint: oss-cn-shanghai.aliyuncs.com
+          access-key-id: ${{ secrets.OSS_KEY_ID }}
+          access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
+
+      - name: Sync file to oss
+        run: ossutil sync output-binary/${{ env.ADDON_PLATFORM }} oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }} --delete --force
