@@ -41,6 +41,6 @@ jobs:
 
       - name: Sync file to oss
         run: |
-          ls output-binary/*
+          ls output-binary/${{ env.ADDON_PLATFORM }}/*
           ossutil sync output-binary/*.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }} --delete --force
 
