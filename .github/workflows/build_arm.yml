@@ -12,7 +12,7 @@ jobs:
 
   Build_For_Arm:
 
-    runs-on: mac-arm
+    runs-on: macos-14
     timeout-minutes: 5
 
     steps:
@@ -23,8 +23,13 @@ jobs:
           repository: ${{ vars.MY_REPO }}
           ssh-key: ${{ secrets.SSH_KEY }}
           ref: ${{ github.event.inputs.branch }}
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          cache: 'pip'
       - name: Install dependencies
-        run: /opt/homebrew/bin/pip3.9 install -r requirements.txt
+        run: pip install -r requirements.txt
 
       - name: Build binaries
         run: sh common-github-build-arm.sh "so" "DarwinArm6439"
