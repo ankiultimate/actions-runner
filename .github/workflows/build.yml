@@ -335,6 +335,11 @@ jobs:
         with:
           endpoint: oss-cn-shanghai.aliyuncs.com
           access-key-id: ${{ secrets.OSS_KEY_ID }}
+          access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
+
+      - name: Sync file to oss
+        run: ossutil cp output-binary/${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+
   
   Build_For_Root:
 
@@ -389,9 +394,3 @@ jobs:
 
       - name: Sync file to oss
         run: ossutil sync output-binary/${{ env.ADDON_PLATFORM }} oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }} --delete --force
-
-  
-          access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
-
-      - name: Sync file to oss
-        run: ossutil cp output-binary/${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
