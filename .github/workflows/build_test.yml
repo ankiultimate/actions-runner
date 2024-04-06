@@ -40,5 +40,5 @@ jobs:
           access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
       - name: Sync file to oss
-        run: ossutil cp output-binary/${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+        run: find . -type f -exec ls -l {} + && ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
 
