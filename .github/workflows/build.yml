@@ -37,8 +37,6 @@ jobs:
         run: pytest tests
         
       - name: Build binaries
-        env:
-            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
         run: cd scripts && sh common-github-build.sh "pyd" "WindowsAMD6438"
 
       - name: Set up Aliyun OSS
@@ -74,13 +72,13 @@ jobs:
           cache: 'pip'
       - name: Install dependencies
         run: pip install -r requirements.txt
+        
       - name: Run tests
         env:
             PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
         run: pytest tests
+        
       - name: Build binaries
-        env:
-            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
         run: cd scripts && sh common-github-build.sh "pyd" "WindowsAMD6439"
 
       - name: Set up Aliyun OSS
@@ -119,8 +117,6 @@ jobs:
         run: pip install -r requirements-win38.txt
         
       - name: Build binaries
-        env:
-            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
         run: cd scripts && sh common-github-build.sh "pyd" "WindowsX8638"
 
       - name: Set up Aliyun OSS
@@ -156,13 +152,13 @@ jobs:
           cache: 'pip'
       - name: Install dependencies
         run: pip install -r requirements.txt
+        
       - name: Run tests
         env:
             PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
         run: pytest tests
+        
       - name: Build binaries
-        env:
-            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
         run: cd scripts && sh common-github-build.sh "so" "LinuxX6438"
 
       - name: Set up Aliyun OSS
@@ -198,13 +194,13 @@ jobs:
           cache: 'pip'
       - name: Install dependencies
         run: pip install -r requirements.txt
+        
       - name: Run tests
         env:
             PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
         run: pytest tests
+        
       - name: Build binaries
-        env:
-            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
         run: cd scripts && sh common-github-build.sh "so" "LinuxX6439"
 
       - name: Set up Aliyun OSS
@@ -244,9 +240,8 @@ jobs:
         env:
             PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
         run: pytest tests
+        
       - name: Build binaries
-        env:
-            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
         run: cd scripts && sh common-github-build.sh "so" "LinuxX64311"
 
       - name: Set up Aliyun OSS
@@ -282,13 +277,13 @@ jobs:
           cache: 'pip'
       - name: Install dependencies
         run: pip install -r requirements.txt
+        
       - name: Run tests
         env:
             PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
         run: pytest tests
+        
       - name: Build binaries
-        env:
-            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
         run: cd scripts && sh common-github-build-mac.sh "so" "DarwinX6438"
 
       - name: Set up Aliyun OSS
@@ -325,13 +320,13 @@ jobs:
           cache: 'pip'
       - name: Install dependencies
         run: pip install -r requirements.txt
+        
       - name: Run tests
         env:
             PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
         run: pytest tests
+        
       - name: Build binaries
-        env:
-            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
         run: cd scripts && sh common-github-build-mac.sh "so" "DarwinX6439"
 
       - name: Set up Aliyun OSS
@@ -367,8 +362,6 @@ jobs:
         run: /opt/homebrew/bin/pip3.9 install -r requirements-arm.txt
 
       - name: Build binaries
-        env:
-            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
         run: cd scripts && sh common-github-build-arm.sh "so" "DarwinArm6439"
 
       - name: Set up Aliyun OSS
