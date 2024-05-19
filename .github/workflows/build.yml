@@ -30,7 +30,12 @@ jobs:
           cache: 'pip'
       - name: Install dependencies
         run: pip install -r requirements.txt
-
+        
+      - name: Run tests
+        env:
+            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
+        run: pytest tests
+        
       - name: Build binaries
         run: cd scripts && sh common-github-build.sh "pyd" "WindowsAMD6438"
 
@@ -102,10 +107,7 @@ jobs:
           architecture: 'x86'
       - name: Install dependencies
         run: pip install -r requirements-win38.txt
-      - name: Run tests
-        env:
-            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
-        run: pytest tests
+        
       - name: Build binaries
         run: cd scripts && sh common-github-build.sh "pyd" "WindowsX8638"
 
