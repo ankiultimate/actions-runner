@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: git9527/clean-up-action@v1
       - name: Checkout source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: ${{ vars.MY_REPO }}
           ssh-key: ${{ secrets.SSH_KEY }}
@@ -31,11 +31,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Run tests
-        run: |
-          cd ultimate-template-addon
-          pytest lib
+        env:
+            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
+        run: pytest tests
       - name: Build binaries
-        run: sh common-github-build.sh "pyd" "WindowsAMD6438"
+        run: cd scripts && sh common-github-build.sh "pyd" "WindowsAMD6438"
 
       - name: Set up Aliyun OSS
         uses: yizhoumo/setup-ossutil@v1
@@ -45,7 +45,7 @@ jobs:
           access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
       - name: Sync file to oss
-        run: ossutil cp output-binary/${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+        run: pwd && ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
 
   Build_For_Win64_39:
 
@@ -55,7 +55,7 @@ jobs:
     steps:
       - uses: git9527/clean-up-action@v1
       - name: Checkout source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: ${{ vars.MY_REPO }}
           ssh-key: ${{ secrets.SSH_KEY }}
@@ -68,11 +68,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Run tests
-        run: |
-          cd ultimate-template-addon
-          pytest lib
+        env:
+            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
+        run: pytest tests
       - name: Build binaries
-        run: sh common-github-build.sh "pyd" "WindowsAMD6439"
+        run: cd scripts && sh common-github-build.sh "pyd" "WindowsAMD6439"
 
       - name: Set up Aliyun OSS
         uses: yizhoumo/setup-ossutil@v1
@@ -82,7 +82,7 @@ jobs:
           access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
       - name: Sync file to oss
-        run: ossutil cp output-binary/${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+        run: pwd && ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
 
   Build_For_Win32_38:
 
@@ -106,11 +106,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Run tests
-        run: |
-          cd ultimate-template-addon
-          pytest lib
+        env:
+            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
+        run: pytest tests
       - name: Build binaries
-        run: sh common-github-build.sh "pyd" "WindowsX8638"
+        run: cd scripts && sh common-github-build.sh "pyd" "WindowsX8638"
 
       - name: Set up Aliyun OSS
         uses: yizhoumo/setup-ossutil@v1
@@ -120,7 +120,7 @@ jobs:
           access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
       - name: Sync file to oss
-        run: ossutil cp output-binary/${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+        run: pwd && ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
 
   Build_For_Ubuntu_38:
 
@@ -143,11 +143,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Run tests
-        run: |
-          cd ultimate-template-addon
-          pytest lib
+        env:
+            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
+        run: pytest tests
       - name: Build binaries
-        run: sh common-github-build.sh "so" "LinuxX6438"
+        run: cd scripts && sh common-github-build.sh "so" "LinuxX6438"
 
       - name: Set up Aliyun OSS
         uses: yizhoumo/setup-ossutil@v1
@@ -157,7 +157,7 @@ jobs:
           access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
       - name: Sync file to oss
-        run: ossutil cp output-binary/${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+        run: pwd && ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
 
   Build_For_Ubuntu_39:
 
@@ -167,7 +167,7 @@ jobs:
     steps:
       - uses: git9527/clean-up-action@v1
       - name: Checkout source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: ${{ vars.MY_REPO }}
           ssh-key: ${{ secrets.SSH_KEY }}
@@ -180,11 +180,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Run tests
-        run: |
-          cd ultimate-template-addon
-          pytest lib
+        env:
+            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
+        run: pytest tests
       - name: Build binaries
-        run: sh common-github-build.sh "so" "LinuxX6439"
+        run: cd scripts && sh common-github-build.sh "so" "LinuxX6439"
 
       - name: Set up Aliyun OSS
         uses: yizhoumo/setup-ossutil@v1
@@ -194,7 +194,7 @@ jobs:
           access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
       - name: Sync file to oss
-        run: ossutil cp output-binary/${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+        run: pwd && ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
 
   Build_For_Ubuntu_311:
 
@@ -204,7 +204,7 @@ jobs:
     steps:
       - uses: git9527/clean-up-action@v1
       - name: Checkout source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: ${{ vars.MY_REPO }}
           ssh-key: ${{ secrets.SSH_KEY }}
@@ -217,11 +217,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Run tests
-        run: |
-          cd ultimate-template-addon
-          pytest lib
+        env:
+            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
+        run: pytest tests
       - name: Build binaries
-        run: sh common-github-build.sh "so" "LinuxX64311"
+        run: cd scripts && sh common-github-build.sh "so" "LinuxX64311"
 
       - name: Set up Aliyun OSS
         uses: yizhoumo/setup-ossutil@v1
@@ -231,7 +231,7 @@ jobs:
           access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
       - name: Sync file to oss
-        run: ossutil cp output-binary/${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+        run: pwd && ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
 
   Build_For_Mac_38:
 
@@ -241,7 +241,7 @@ jobs:
     steps:
       - uses: git9527/clean-up-action@v1
       - name: Checkout source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: ${{ vars.MY_REPO }}
           ssh-key: ${{ secrets.SSH_KEY }}
@@ -254,11 +254,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Run tests
-        run: |
-          cd ultimate-template-addon
-          pytest lib
+        env:
+            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
+        run: pytest tests
       - name: Build binaries
-        run: sh common-github-build-mac.sh "so" "DarwinX6438"
+        run: cd scripts && common-github-build-mac.sh "so" "DarwinX6438"
 
       - name: Set up Aliyun OSS
         uses: yizhoumo/setup-ossutil@v1
@@ -268,7 +268,7 @@ jobs:
           access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
       - name: Sync file to oss
-        run: ossutil cp output-binary/${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+        run: pwd && ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
 
 
   Build_For_Mac_39:
@@ -279,7 +279,7 @@ jobs:
     steps:
       - uses: git9527/clean-up-action@v1
       - name: Checkout source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: ${{ vars.MY_REPO }}
           ssh-key: ${{ secrets.SSH_KEY }}
@@ -292,11 +292,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Run tests
-        run: |
-          cd ultimate-template-addon
-          pytest lib
+        env:
+            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
+        run: pytest tests
       - name: Build binaries
-        run: sh common-github-build-mac.sh "so" "DarwinX6439"
+        run: cd scripts && common-github-build-mac.sh "so" "DarwinX6439"
 
       - name: Set up Aliyun OSS
         uses: yizhoumo/setup-ossutil@v1
@@ -306,7 +306,7 @@ jobs:
           access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
       - name: Sync file to oss
-        run: ossutil cp output-binary/${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+        run: pwd && ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
         
   Build_For_Mac_Arm:
 
@@ -316,7 +316,7 @@ jobs:
     steps:
       - uses: git9527/clean-up-action@v1
       - name: Checkout source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: ${{ vars.MY_REPO }}
           ssh-key: ${{ secrets.SSH_KEY }}
@@ -328,7 +328,7 @@ jobs:
         run: /opt/homebrew/bin/pip3.9 install -r requirements.txt
 
       - name: Build binaries
-        run: sh common-github-build-arm.sh "so" "DarwinArm6439"
+        run: cd scripts && common-github-build-arm.sh "so" "DarwinArm6439"
 
       - name: Set up Aliyun OSS
         uses: yizhoumo/setup-ossutil@v1
@@ -338,7 +338,7 @@ jobs:
           access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
       - name: Sync file to oss
-        run: ossutil cp output-binary/${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+        run: pwd && ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
 
   
   Build_For_Root:
@@ -349,14 +349,14 @@ jobs:
     steps:
       - uses: git9527/clean-up-action@v1
       - name: Checkout source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: ${{ vars.MY_REPO }}
           ssh-key: ${{ secrets.SSH_KEY }}
           ref: ${{ github.event.inputs.branch }}
 
       - name: Build internal root
-        run: sh common-github-build-root.sh "root"
+        run: cd scripts && common-github-build-root.sh "root"
 
       - name: Set up Aliyun OSS
         uses: yizhoumo/setup-ossutil@v1
@@ -366,7 +366,7 @@ jobs:
           access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
       - name: Sync file to oss
-        run: ossutil sync output-binary/${{ env.ADDON_PLATFORM }} oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }} --delete --force
+        run: pwd && ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
 
   Build_For_Root_Global:
 
@@ -376,14 +376,14 @@ jobs:
     steps:
       - uses: git9527/clean-up-action@v1
       - name: Checkout source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: ${{ vars.MY_REPO }}
           ssh-key: ${{ secrets.SSH_KEY }}
           ref: ${{ github.event.inputs.branch }}
 
       - name: Build global root
-        run: sh common-github-build-global-root.sh "root-global"
+        run: cd scripts && common-github-build-global-root.sh "root-global"
 
       - name: Set up Aliyun OSS
         uses: yizhoumo/setup-ossutil@v1
@@ -393,4 +393,4 @@ jobs:
           access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
       - name: Sync file to oss
-        run: ossutil sync output-binary/${{ env.ADDON_PLATFORM }} oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }} --delete --force
+        run: pwd && ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
