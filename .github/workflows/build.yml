@@ -324,7 +324,7 @@ jobs:
         run: brew reinstall python@3.9
         
       - name: Install dependencies
-        run: /opt/homebrew/bin/pip3.9 install -r requirements.txt
+        run: /opt/homebrew/bin/pip3.9 install -r requirements-arm.txt
 
       - name: Build binaries
         run: cd scripts && sh common-github-build-arm.sh "so" "DarwinArm6439"
