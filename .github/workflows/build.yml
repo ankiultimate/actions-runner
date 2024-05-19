@@ -5,7 +5,7 @@ on:
     inputs:
       branch:
         description: 'Target remote branch name'
-        required: true
+        default: 'master'
 
 
 jobs:
