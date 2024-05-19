@@ -46,8 +46,11 @@ jobs:
           access-key-id: ${{ secrets.OSS_KEY_ID }}
           access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
-      - name: Sync file to oss
-        run: pwd && ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+      - name: Sync file to OSS
+        run: |
+          pwd 
+          ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+          ossutil cp ${{ env.ADDON_PLATFORM }}-hash.txt oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
 
   Build_For_Win64_39:
 
@@ -83,8 +86,11 @@ jobs:
           access-key-id: ${{ secrets.OSS_KEY_ID }}
           access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
-      - name: Sync file to oss
-        run: pwd && ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+      - name: Sync file to OSS
+        run: |
+          pwd 
+          ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+          ossutil cp ${{ env.ADDON_PLATFORM }}-hash.txt oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
 
   Build_For_Win32_38:
 
@@ -118,8 +124,11 @@ jobs:
           access-key-id: ${{ secrets.OSS_KEY_ID }}
           access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
-      - name: Sync file to oss
-        run: pwd && ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+      - name: Sync file to OSS
+        run: |
+          pwd 
+          ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+          ossutil cp ${{ env.ADDON_PLATFORM }}-hash.txt oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
 
   Build_For_Ubuntu_38:
 
@@ -155,8 +164,11 @@ jobs:
           access-key-id: ${{ secrets.OSS_KEY_ID }}
           access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
-      - name: Sync file to oss
-        run: pwd && ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+      - name: Sync file to OSS
+        run: |
+          pwd 
+          ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+          ossutil cp ${{ env.ADDON_PLATFORM }}-hash.txt oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
 
   Build_For_Ubuntu_39:
 
@@ -192,8 +204,11 @@ jobs:
           access-key-id: ${{ secrets.OSS_KEY_ID }}
           access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
-      - name: Sync file to oss
-        run: pwd && ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+      - name: Sync file to OSS
+        run: |
+          pwd 
+          ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+          ossutil cp ${{ env.ADDON_PLATFORM }}-hash.txt oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
 
   Build_For_Ubuntu_311:
 
@@ -229,8 +244,11 @@ jobs:
           access-key-id: ${{ secrets.OSS_KEY_ID }}
           access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
-      - name: Sync file to oss
-        run: pwd && ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+      - name: Sync file to OSS
+        run: |
+          pwd 
+          ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+          ossutil cp ${{ env.ADDON_PLATFORM }}-hash.txt oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
 
   Build_For_Mac_38:
 
@@ -266,8 +284,11 @@ jobs:
           access-key-id: ${{ secrets.OSS_KEY_ID }}
           access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
-      - name: Sync file to oss
-        run: pwd && ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+      - name: Sync file to OSS
+        run: |
+          pwd 
+          ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+          ossutil cp ${{ env.ADDON_PLATFORM }}-hash.txt oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
 
 
   Build_For_Mac_39:
@@ -304,8 +325,11 @@ jobs:
           access-key-id: ${{ secrets.OSS_KEY_ID }}
           access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
-      - name: Sync file to oss
-        run: pwd && ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+      - name: Sync file to OSS
+        run: |
+          pwd 
+          ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+          ossutil cp ${{ env.ADDON_PLATFORM }}-hash.txt oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
         
   Build_For_Mac_Arm:
 
@@ -336,8 +360,11 @@ jobs:
           access-key-id: ${{ secrets.OSS_KEY_ID }}
           access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
-      - name: Sync file to oss
-        run: pwd && ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+      - name: Sync file to OSS
+        run: |
+          pwd 
+          ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+          ossutil cp ${{ env.ADDON_PLATFORM }}-hash.txt oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
 
   
   Build_For_Root:
