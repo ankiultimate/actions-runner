@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       branch:
-        description: 'Target branch name'
+        description: 'Target remote branch name'
         required: true
 
 
@@ -258,7 +258,7 @@ jobs:
             PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
         run: pytest tests
       - name: Build binaries
-        run: cd scripts && common-github-build-mac.sh "so" "DarwinX6438"
+        run: cd scripts && sh common-github-build-mac.sh "so" "DarwinX6438"
 
       - name: Set up Aliyun OSS
         uses: yizhoumo/setup-ossutil@v1
@@ -296,7 +296,7 @@ jobs:
             PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
         run: pytest tests
       - name: Build binaries
-        run: cd scripts && common-github-build-mac.sh "so" "DarwinX6439"
+        run: cd scripts && sh common-github-build-mac.sh "so" "DarwinX6439"
 
       - name: Set up Aliyun OSS
         uses: yizhoumo/setup-ossutil@v1
@@ -328,7 +328,7 @@ jobs:
         run: /opt/homebrew/bin/pip3.9 install -r requirements.txt
 
       - name: Build binaries
-        run: cd scripts && common-github-build-arm.sh "so" "DarwinArm6439"
+        run: cd scripts && sh common-github-build-arm.sh "so" "DarwinArm6439"
 
       - name: Set up Aliyun OSS
         uses: yizhoumo/setup-ossutil@v1
