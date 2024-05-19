@@ -355,7 +355,7 @@ jobs:
           ref: ${{ github.event.inputs.branch }}
 
       - name: Build internal root
-        run: cd scripts && common-github-build-root.sh "root"
+        run: cd scripts && sh common-github-build-root.sh "root"
 
       - name: Set up Aliyun OSS
         uses: yizhoumo/setup-ossutil@v1
@@ -382,7 +382,7 @@ jobs:
           ref: ${{ github.event.inputs.branch }}
 
       - name: Build global root
-        run: cd scripts && common-github-build-global-root.sh "root-global"
+        run: cd scripts && sh common-github-build-global-root.sh "root-global"
 
       - name: Set up Aliyun OSS
         uses: yizhoumo/setup-ossutil@v1
