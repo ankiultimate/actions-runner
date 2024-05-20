@@ -457,4 +457,4 @@ jobs:
           access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
       - name: Sync file to oss
-        run: pwd && ossutil sync ultimate-addon-universal-${{ env.ADDON_VERSION }}.ankiaddon oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --delete --force
+        run: pwd && ossutil cp ultimate-addon-universal-${{ env.ADDON_VERSION }}.ankiaddon oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --delete --force
