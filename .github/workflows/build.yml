@@ -16,7 +16,7 @@ jobs:
     timeout-minutes: 4
 
     steps:
-      - uses: git9527/clean-up-action@v1
+      - uses: git9527/clean-up-action@v3
       - name: Checkout source code
         uses: actions/checkout@v4
         with:
@@ -58,7 +58,7 @@ jobs:
     timeout-minutes: 4
 
     steps:
-      - uses: git9527/clean-up-action@v1
+      - uses: git9527/clean-up-action@v3
       - name: Checkout source code
         uses: actions/checkout@v4
         with:
@@ -100,7 +100,7 @@ jobs:
     timeout-minutes: 4
 
     steps:
-      - uses: git9527/clean-up-action@v1
+      - uses: git9527/clean-up-action@v3
       - name: Checkout source code
         uses: actions/checkout@v3
         with:
@@ -138,7 +138,7 @@ jobs:
     timeout-minutes: 4
 
     steps:
-      - uses: git9527/clean-up-action@v1
+      - uses: git9527/clean-up-action@v3
       - name: Checkout source code
         uses: actions/checkout@v3
         with:
@@ -180,7 +180,7 @@ jobs:
     timeout-minutes: 4
 
     steps:
-      - uses: git9527/clean-up-action@v1
+      - uses: git9527/clean-up-action@v3
       - name: Checkout source code
         uses: actions/checkout@v4
         with:
@@ -222,7 +222,7 @@ jobs:
     timeout-minutes: 4
 
     steps:
-      - uses: git9527/clean-up-action@v1
+      - uses: git9527/clean-up-action@v3
       - name: Checkout source code
         uses: actions/checkout@v4
         with:
@@ -263,7 +263,7 @@ jobs:
     timeout-minutes: 4
 
     steps:
-      - uses: git9527/clean-up-action@v1
+      - uses: git9527/clean-up-action@v3
       - name: Checkout source code
         uses: actions/checkout@v4
         with:
@@ -306,7 +306,7 @@ jobs:
     timeout-minutes: 4
 
     steps:
-      - uses: git9527/clean-up-action@v1
+      - uses: git9527/clean-up-action@v3
       - name: Checkout source code
         uses: actions/checkout@v4
         with:
@@ -348,7 +348,7 @@ jobs:
     timeout-minutes: 4
 
     steps:
-      - uses: git9527/clean-up-action@v1
+      - uses: git9527/clean-up-action@v3
       - name: Checkout source code
         uses: actions/checkout@v4
         with:
@@ -384,7 +384,7 @@ jobs:
     timeout-minutes: 3
 
     steps:
-      - uses: git9527/clean-up-action@v1
+      - uses: git9527/clean-up-action@v3
       - name: Checkout source code
         uses: actions/checkout@v4
         with:
@@ -403,7 +403,11 @@ jobs:
           access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
       - name: Sync file to oss
-        run: pwd && ossutil sync src/output-binary/${{ env.ADDON_PLATFORM }} oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }} --delete --force
+        run: |
+            pwd
+            ossutil sync src/output-binary/${{ env.ADDON_PLATFORM }} oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }} --delete --force
+            ossutil cp ultimate-addon-universal-${{ env.ADDON_VERSION }}.ankiaddon oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+
 
   Build_For_Root_Global:
 
@@ -411,7 +415,7 @@ jobs:
     timeout-minutes: 3
 
     steps:
-      - uses: git9527/clean-up-action@v1
+      - uses: git9527/clean-up-action@v3
       - name: Checkout source code
         uses: actions/checkout@v4
         with:
@@ -430,31 +434,10 @@ jobs:
           access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
       - name: Sync file to oss
-        run: pwd && ossutil sync src/output-binary/${{ env.ADDON_PLATFORM }} oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }} --delete --force
+        run: |
+            pwd
+            ossutil sync src/output-binary/${{ env.ADDON_PLATFORM }} oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }} --delete --force
+            ossutil cp global-ultimate-addon-universal-${{ env.ADDON_VERSION }}.ankiaddon oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
 
-  Build_For_AnkiAddon_file:
 
-    runs-on: ubuntu-22.04
-    timeout-minutes: 3
-
-    steps:
-      - uses: git9527/clean-up-action@v1
-      - name: Checkout source code
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ vars.MY_REPO }}
-          ssh-key: ${{ secrets.SSH_KEY }}
-          ref: ${{ github.event.inputs.branch }}
-
-      - name: Build ankiaddon file
-        run: cd scripts && sh github-build-final-package.sh
-
-      - name: Set up Aliyun OSS
-        uses: yizhoumo/setup-ossutil@v1
-        with:
-          endpoint: oss-cn-shanghai.aliyuncs.com
-          access-key-id: ${{ secrets.OSS_KEY_ID }}
-          access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
-
-      - name: Sync file to oss
-        run: pwd && ossutil cp ultimate-addon-universal-${{ env.ADDON_VERSION }}.ankiaddon oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+  
