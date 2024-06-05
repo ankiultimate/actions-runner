@@ -11,7 +11,7 @@ jobs:
     timeout-minutes: 3
 
     steps:
-      - uses: git9527/clean-up-action@v1
+      - uses: git9527/clean-up-action@v3
       - name: Checkout source code
         uses: actions/checkout@v4
         with:
@@ -41,7 +41,7 @@ jobs:
     timeout-minutes: 4
 
     steps:
-      - uses: git9527/clean-up-action@v1
+      - uses: git9527/clean-up-action@v3
       - name: Checkout source code
         uses: actions/checkout@v4
         with:
