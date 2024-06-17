@@ -345,7 +345,7 @@ jobs:
   Build_For_Mac_Arm:
 
     runs-on: macos-14
-    timeout-minutes: 4
+    timeout-minutes: 5
 
     steps:
       - uses: git9527/clean-up-action@v3
