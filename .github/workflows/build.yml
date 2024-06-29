@@ -134,7 +134,7 @@ jobs:
 
   Build_For_Ubuntu_38:
 
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04.3
     timeout-minutes: 4
 
     steps:
@@ -176,7 +176,7 @@ jobs:
 
   Build_For_Ubuntu_39:
 
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04.3
     timeout-minutes: 4
 
     steps:
@@ -218,7 +218,7 @@ jobs:
 
   Build_For_Ubuntu_311:
 
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04.3
     timeout-minutes: 4
 
     steps:
@@ -380,7 +380,7 @@ jobs:
   
   Build_For_Root:
 
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04.3
     timeout-minutes: 3
 
     steps:
@@ -411,7 +411,7 @@ jobs:
 
   Build_For_Root_Global:
 
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04.3
     timeout-minutes: 3
 
     steps:
