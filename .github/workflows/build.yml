@@ -26,7 +26,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5.1.0
         with:
-          python-version: '3.8'
+          python-version: '3.8.10'
           cache: 'pip'
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -68,7 +68,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5.1.0
         with:
-          python-version: '3.9'
+          python-version: '3.9.13'
           cache: 'pip'
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -110,7 +110,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5.1.0
         with:
-          python-version: '3.8'
+          python-version: '3.8.10'
           cache: 'pip'
           architecture: 'x86'
       - name: Install dependencies
@@ -148,7 +148,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5.1.0
         with:
-          python-version: '3.8'
+          python-version: '3.8.10'
           cache: 'pip'
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -190,7 +190,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5.1.0
         with:
-          python-version: '3.9'
+          python-version: '3.9.13'
           cache: 'pip'
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -273,7 +273,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5.1.0
         with:
-          python-version: '3.8'
+          python-version: '3.8.10'
           cache: 'pip'
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -316,7 +316,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5.1.0
         with:
-          python-version: '3.9'
+          python-version: '3.9.13'
           cache: 'pip'
       - name: Install dependencies
         run: pip install -r requirements.txt
