@@ -26,7 +26,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5.1.0
         with:
-          python-version: '3.8.10'
+          python-version: '3.8'
           cache: 'pip'
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -68,7 +68,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5.1.0
         with:
-          python-version: '3.9.13'
+          python-version: '3.9'
           cache: 'pip'
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -110,7 +110,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5.1.0
         with:
-          python-version: '3.8.10'
+          python-version: '3.8'
           cache: 'pip'
           architecture: 'x86'
       - name: Install dependencies
@@ -134,7 +134,7 @@ jobs:
 
   Build_For_Ubuntu_38:
 
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 4
 
     steps:
@@ -148,7 +148,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5.1.0
         with:
-          python-version: '3.8.10'
+          python-version: '3.8'
           cache: 'pip'
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -176,7 +176,7 @@ jobs:
 
   Build_For_Ubuntu_39:
 
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 4
 
     steps:
@@ -190,7 +190,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5.1.0
         with:
-          python-version: '3.9.13'
+          python-version: '3.9'
           cache: 'pip'
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -218,7 +218,7 @@ jobs:
 
   Build_For_Ubuntu_311:
 
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 4
 
     steps:
@@ -273,7 +273,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5.1.0
         with:
-          python-version: '3.8.10'
+          python-version: '3.8'
           cache: 'pip'
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -316,7 +316,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5.1.0
         with:
-          python-version: '3.9.13'
+          python-version: '3.9'
           cache: 'pip'
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -380,7 +380,7 @@ jobs:
   
   Build_For_Root:
 
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 3
 
     steps:
@@ -411,7 +411,7 @@ jobs:
 
   Build_For_Root_Global:
 
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 3
 
     steps:
