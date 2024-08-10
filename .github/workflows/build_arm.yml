@@ -10,7 +10,7 @@ on:
 
 jobs:
 
-  Build_For_Arm:
+  Build_For_Mac_Arm:
 
     runs-on: macos-14
     timeout-minutes: 5
@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: git9527/clean-up-action@v3
       - name: Checkout source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: ${{ vars.MY_REPO }}
           ssh-key: ${{ secrets.SSH_KEY }}
@@ -27,10 +27,10 @@ jobs:
         run: brew reinstall python@3.9
         
       - name: Install dependencies
-        run: /opt/homebrew/bin/pip3.9 install -r requirements.txt
+        run: /opt/homebrew/bin/pip3.9 install -r requirements-arm.txt
 
       - name: Build binaries
-        run: sh common-github-build-arm.sh "so" "DarwinArm6439"
+        run: cd scripts && sh common-github-build-arm.sh "so" "DarwinArm6439"
 
       - name: Set up Aliyun OSS
         uses: yizhoumo/setup-ossutil@v1
@@ -39,5 +39,8 @@ jobs:
           access-key-id: ${{ secrets.OSS_KEY_ID }}
           access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
 
-      - name: Sync file to oss
-        run: ossutil cp output-binary/${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+      - name: Sync file to OSS
+        run: |
+          pwd 
+          ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+          ossutil cp ${{ env.ADDON_PLATFORM }}-hash.txt oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
