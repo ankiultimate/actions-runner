@@ -5,7 +5,7 @@ on:
     inputs:
       branch:
         description: 'Target branch name'
-        required: true
+        default: 'master'
 
 
 jobs:
