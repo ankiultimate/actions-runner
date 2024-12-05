@@ -269,7 +269,7 @@ jobs:
 
   Build_For_Mac_38:
 
-    runs-on: macos-12
+    runs-on: macos-13
     timeout-minutes: 5
 
     steps:
@@ -312,7 +312,7 @@ jobs:
 
   Build_For_Mac_39:
 
-    runs-on: macos-12
+    runs-on: macos-13
     timeout-minutes: 5
 
     steps:
