@@ -135,7 +135,7 @@ jobs:
   Build_For_Ubuntu_38:
 
     runs-on: ubuntu-20.04
-    timeout-minutes: 5
+    timeout-minutes: 8
 
     steps:
       - uses: git9527/clean-up-action@v3
@@ -180,7 +180,7 @@ jobs:
   Build_For_Ubuntu_39:
 
     runs-on: ubuntu-20.04
-    timeout-minutes: 5
+    timeout-minutes: 8
 
     steps:
       - uses: git9527/clean-up-action@v3
@@ -225,7 +225,7 @@ jobs:
   Build_For_Ubuntu_311:
 
     runs-on: ubuntu-20.04
-    timeout-minutes: 5
+    timeout-minutes: 8
 
     steps:
       - uses: git9527/clean-up-action@v3
