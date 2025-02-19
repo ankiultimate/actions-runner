@@ -27,7 +27,14 @@ jobs:
         run: brew reinstall python@3.9
         
       - name: Install dependencies
-        run: /opt/homebrew/bin/pip3.9 install -r requirements-arm.txt
+        run: |
+          /opt/homebrew/bin/pip3.9 install -r requirements-arm.txt
+          /opt/homebrew/bin/pip3.9 pytest
+
+      - name: Run tests
+        env:
+            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
+        run: pytest tests
 
       - name: Build binaries
         run: cd scripts && sh common-github-build-arm.sh "so" "DarwinArm6439"
