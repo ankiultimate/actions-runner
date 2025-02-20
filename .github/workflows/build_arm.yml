@@ -27,7 +27,7 @@ jobs:
         run: |
           brew reinstall python@3.9
           echo "/opt/homebrew/bin" >> $GITHUB_PATH
-          python3 -V
+          python3.9 -V
         
       - name: Install dependencies
         run: pip3.9 install -r requirements-arm.txt
