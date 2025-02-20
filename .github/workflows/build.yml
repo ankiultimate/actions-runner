@@ -38,19 +38,14 @@ jobs:
         
       - name: Build binaries
         run: cd scripts && sh common-github-build.sh "pyd" "WindowsAMD6438"
-
-      - name: Set up Aliyun OSS
-        uses: yizhoumo/setup-ossutil@v1
+      
+      - name: Upload to Dropbox
+        uses: aTable/deploy-to-dropbox@v1.0.7
         with:
-          endpoint: oss-cn-shanghai.aliyuncs.com
-          access-key-id: ${{ secrets.OSS_KEY_ID }}
-          access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
+          DROPBOX_ACCESS_TOKEN: ${{ secrets.DROPBOX_ACCESS_TOKEN }}
+          GLOB: ${{ env.ADDON_PLATFORM }}*.*
+          DROPBOX_DESTINATION_PATH_PREFIX: /${{ env.ADDON_VERSION }}/
 
-      - name: Sync file to OSS
-        run: |
-          pwd 
-          ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
-          ossutil cp ${{ env.ADDON_PLATFORM }}-hash.txt oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
 
   Build_For_Win64_39:
 
@@ -81,18 +76,12 @@ jobs:
       - name: Build binaries
         run: cd scripts && sh common-github-build.sh "pyd" "WindowsAMD6439"
 
-      - name: Set up Aliyun OSS
-        uses: yizhoumo/setup-ossutil@v1
+      - name: Upload to Dropbox
+        uses: aTable/deploy-to-dropbox@v1.0.7
         with:
-          endpoint: oss-cn-shanghai.aliyuncs.com
-          access-key-id: ${{ secrets.OSS_KEY_ID }}
-          access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
-
-      - name: Sync file to OSS
-        run: |
-          pwd 
-          ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
-          ossutil cp ${{ env.ADDON_PLATFORM }}-hash.txt oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+          DROPBOX_ACCESS_TOKEN: ${{ secrets.DROPBOX_ACCESS_TOKEN }}
+          GLOB: ${{ env.ADDON_PLATFORM }}*.*
+          DROPBOX_DESTINATION_PATH_PREFIX: /${{ env.ADDON_VERSION }}/
 
   Build_For_Win32_38:
 
@@ -119,18 +108,12 @@ jobs:
       - name: Build binaries
         run: cd scripts && sh common-github-build.sh "pyd" "WindowsX8638"
 
-      - name: Set up Aliyun OSS
-        uses: yizhoumo/setup-ossutil@v1
+      - name: Upload to Dropbox
+        uses: aTable/deploy-to-dropbox@v1.0.7
         with:
-          endpoint: oss-cn-shanghai.aliyuncs.com
-          access-key-id: ${{ secrets.OSS_KEY_ID }}
-          access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
-
-      - name: Sync file to OSS
-        run: |
-          pwd 
-          ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
-          ossutil cp ${{ env.ADDON_PLATFORM }}-hash.txt oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+          DROPBOX_ACCESS_TOKEN: ${{ secrets.DROPBOX_ACCESS_TOKEN }}
+          GLOB: ${{ env.ADDON_PLATFORM }}*.*
+          DROPBOX_DESTINATION_PATH_PREFIX: /${{ env.ADDON_VERSION }}/
 
   Build_For_Ubuntu_38:
 
@@ -164,18 +147,12 @@ jobs:
       - name: Build binaries
         run: cd scripts && sh common-github-build.sh "so" "LinuxX6438"
 
-      - name: Set up Aliyun OSS
-        uses: yizhoumo/setup-ossutil@v1
+      - name: Upload to Dropbox
+        uses: aTable/deploy-to-dropbox@v1.0.7
         with:
-          endpoint: oss-cn-shanghai.aliyuncs.com
-          access-key-id: ${{ secrets.OSS_KEY_ID }}
-          access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
-
-      - name: Sync file to OSS
-        run: |
-          pwd 
-          ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
-          ossutil cp ${{ env.ADDON_PLATFORM }}-hash.txt oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+          DROPBOX_ACCESS_TOKEN: ${{ secrets.DROPBOX_ACCESS_TOKEN }}
+          GLOB: ${{ env.ADDON_PLATFORM }}*.*
+          DROPBOX_DESTINATION_PATH_PREFIX: /${{ env.ADDON_VERSION }}/
 
   Build_For_Ubuntu_39:
 
@@ -209,18 +186,12 @@ jobs:
       - name: Build binaries
         run: cd scripts && sh common-github-build.sh "so" "LinuxX6439"
 
-      - name: Set up Aliyun OSS
-        uses: yizhoumo/setup-ossutil@v1
+      - name: Upload to Dropbox
+        uses: aTable/deploy-to-dropbox@v1.0.7
         with:
-          endpoint: oss-cn-shanghai.aliyuncs.com
-          access-key-id: ${{ secrets.OSS_KEY_ID }}
-          access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
-
-      - name: Sync file to OSS
-        run: |
-          pwd 
-          ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
-          ossutil cp ${{ env.ADDON_PLATFORM }}-hash.txt oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+          DROPBOX_ACCESS_TOKEN: ${{ secrets.DROPBOX_ACCESS_TOKEN }}
+          GLOB: ${{ env.ADDON_PLATFORM }}*.*
+          DROPBOX_DESTINATION_PATH_PREFIX: /${{ env.ADDON_VERSION }}/
 
   Build_For_Ubuntu_311:
 
@@ -254,18 +225,12 @@ jobs:
       - name: Build binaries
         run: cd scripts && sh common-github-build.sh "so" "LinuxX64311"
 
-      - name: Set up Aliyun OSS
-        uses: yizhoumo/setup-ossutil@v1
+      - name: Upload to Dropbox
+        uses: aTable/deploy-to-dropbox@v1.0.7
         with:
-          endpoint: oss-cn-shanghai.aliyuncs.com
-          access-key-id: ${{ secrets.OSS_KEY_ID }}
-          access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
-
-      - name: Sync file to OSS
-        run: |
-          pwd 
-          ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
-          ossutil cp ${{ env.ADDON_PLATFORM }}-hash.txt oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+          DROPBOX_ACCESS_TOKEN: ${{ secrets.DROPBOX_ACCESS_TOKEN }}
+          GLOB: ${{ env.ADDON_PLATFORM }}*.*
+          DROPBOX_DESTINATION_PATH_PREFIX: /${{ env.ADDON_VERSION }}/
 
   Build_For_Mac_38:
 
@@ -296,18 +261,12 @@ jobs:
       - name: Build binaries
         run: cd scripts && sh common-github-build-mac.sh "so" "DarwinX6438"
 
-      - name: Set up Aliyun OSS
-        uses: yizhoumo/setup-ossutil@v1
+      - name: Upload to Dropbox
+        uses: aTable/deploy-to-dropbox@v1.0.7
         with:
-          endpoint: oss-cn-shanghai.aliyuncs.com
-          access-key-id: ${{ secrets.OSS_KEY_ID }}
-          access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
-
-      - name: Sync file to OSS
-        run: |
-          pwd 
-          ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
-          ossutil cp ${{ env.ADDON_PLATFORM }}-hash.txt oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+          DROPBOX_ACCESS_TOKEN: ${{ secrets.DROPBOX_ACCESS_TOKEN }}
+          GLOB: ${{ env.ADDON_PLATFORM }}*.*
+          DROPBOX_DESTINATION_PATH_PREFIX: /${{ env.ADDON_VERSION }}/
 
 
   Build_For_Mac_39:
@@ -339,18 +298,12 @@ jobs:
       - name: Build binaries
         run: cd scripts && sh common-github-build-mac.sh "so" "DarwinX6439"
 
-      - name: Set up Aliyun OSS
-        uses: yizhoumo/setup-ossutil@v1
+      - name: Upload to Dropbox
+        uses: aTable/deploy-to-dropbox@v1.0.7
         with:
-          endpoint: oss-cn-shanghai.aliyuncs.com
-          access-key-id: ${{ secrets.OSS_KEY_ID }}
-          access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
-
-      - name: Sync file to OSS
-        run: |
-          pwd 
-          ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
-          ossutil cp ${{ env.ADDON_PLATFORM }}-hash.txt oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+          DROPBOX_ACCESS_TOKEN: ${{ secrets.DROPBOX_ACCESS_TOKEN }}
+          GLOB: ${{ env.ADDON_PLATFORM }}*.*
+          DROPBOX_DESTINATION_PATH_PREFIX: /${{ env.ADDON_VERSION }}/
         
   Build_For_Mac_Arm:
 
@@ -382,16 +335,10 @@ jobs:
       - name: Build binaries
         run: cd scripts && sh common-github-build-arm.sh "so" "DarwinArm6439"
 
-      - name: Set up Aliyun OSS
-        uses: yizhoumo/setup-ossutil@v1
+      - name: Upload to Dropbox
+        uses: aTable/deploy-to-dropbox@v1.0.7
         with:
-          endpoint: oss-cn-shanghai.aliyuncs.com
-          access-key-id: ${{ secrets.OSS_KEY_ID }}
-          access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
-
-      - name: Sync file to OSS
-        run: |
-          pwd 
-          ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
-          ossutil cp ${{ env.ADDON_PLATFORM }}-hash.txt oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+          DROPBOX_ACCESS_TOKEN: ${{ secrets.DROPBOX_ACCESS_TOKEN }}
+          GLOB: ${{ env.ADDON_PLATFORM }}*.*
+          DROPBOX_DESTINATION_PATH_PREFIX: /${{ env.ADDON_VERSION }}/
   
