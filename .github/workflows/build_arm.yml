@@ -40,15 +40,16 @@ jobs:
       - name: Build binaries
         run: cd scripts && sh common-github-build-arm.sh "so" "DarwinArm6439"
 
-      - name: Set up Aliyun OSS
-        uses: yizhoumo/setup-ossutil@v1
-        with:
-          endpoint: oss-cn-shanghai.aliyuncs.com
-          access-key-id: ${{ secrets.OSS_KEY_ID }}
-          access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
-
-      - name: Sync file to OSS
+      - name: Upload to Dropbox
         run: |
-          pwd 
-          ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
-          ossutil cp ${{ env.ADDON_PLATFORM }}-hash.txt oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
+          curl -X POST https://content.dropboxapi.com/2/files/upload \
+          --header "Authorization: Bearer ${{ secrets.DROPBOX_ACCESS_TOKEN }}" \
+          --header "Dropbox-API-Arg: {\"path\": \"/${{ env.ADDON_VERSION }}/{{ env.ADDON_PLATFORM }}.zip\", \"mode\": \"add\", \"autorename\": true, \"mute\": false}" \
+          --header "Content-Type: application/octet-stream" \
+          --data-binary @${{ env.ADDON_PLATFORM }}.zip
+          curl -X POST https://content.dropboxapi.com/2/files/upload \
+          --header "Authorization: Bearer ${{ secrets.DROPBOX_ACCESS_TOKEN }}" \
+          --header "Dropbox-API-Arg: {\"path\": \"/${{ env.ADDON_VERSION }}/{{ env.ADDON_PLATFORM }}-hash.txt\", \"mode\": \"add\", \"autorename\": true, \"mute\": false}" \
+          --header "Content-Type: application/octet-stream" \
+          --data-binary @${{ env.ADDON_PLATFORM }}-hash.txt
+
