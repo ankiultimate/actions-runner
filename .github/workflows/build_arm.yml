@@ -44,12 +44,13 @@ jobs:
         run: |
           curl -X POST https://content.dropboxapi.com/2/files/upload \
           --header "Authorization: Bearer ${{ secrets.DROPBOX_ACCESS_TOKEN }}" \
-          --header "Dropbox-API-Arg: {\"path\": \"/${{ env.ADDON_VERSION }}/{{ env.ADDON_PLATFORM }}.zip\", \"mode\": \"add\", \"autorename\": true, \"mute\": false}" \
+          --header "Dropbox-API-Arg: {\"path\": \"/${{ env.ADDON_VERSION }}/{{ $env.ADDON_PLATFORM }}.zip\", \"mode\": \"add\", \"autorename\": true, \"mute\": false}" \
           --header "Content-Type: application/octet-stream" \
           --data-binary @${{ env.ADDON_PLATFORM }}.zip
+          echo "Uploading hash file"
           curl -X POST https://content.dropboxapi.com/2/files/upload \
           --header "Authorization: Bearer ${{ secrets.DROPBOX_ACCESS_TOKEN }}" \
-          --header "Dropbox-API-Arg: {\"path\": \"/${{ env.ADDON_VERSION }}/{{ env.ADDON_PLATFORM }}-hash.txt\", \"mode\": \"add\", \"autorename\": true, \"mute\": false}" \
+          --header "Dropbox-API-Arg: {\"path\": \"/${{ env.ADDON_VERSION }}/{{ $env.ADDON_PLATFORM }}-hash.txt\", \"mode\": \"add\", \"autorename\": true, \"mute\": false}" \
           --header "Content-Type: application/octet-stream" \
           --data-binary @${{ env.ADDON_PLATFORM }}-hash.txt
 
