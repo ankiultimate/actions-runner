@@ -29,7 +29,7 @@ jobs:
       - name: Install dependencies
         run: |
           /opt/homebrew/bin/pip3.9 install -r requirements-arm.txt
-          /opt/homebrew/bin/pip3.9 install pytest
+          ls -ltrh /opt/homebrew/bin/
 
       - name: Run tests
         env:
