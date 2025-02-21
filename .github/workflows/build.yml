@@ -40,7 +40,7 @@ jobs:
         run: cd scripts && sh common-github-build.sh "pyd" "WindowsAMD6438"
 
       - name: Upload to Dropbox
-        uses: git9527/deploy-to-dropbox@v12
+        uses: git9527/deploy-to-dropbox@v15
         with:
           DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
           DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
@@ -79,7 +79,7 @@ jobs:
         run: cd scripts && sh common-github-build.sh "pyd" "WindowsAMD6439"
 
       - name: Upload to Dropbox
-        uses: git9527/deploy-to-dropbox@v12
+        uses: git9527/deploy-to-dropbox@v15
         with:
           DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
           DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
@@ -113,7 +113,7 @@ jobs:
         run: cd scripts && sh common-github-build.sh "pyd" "WindowsX8638"
 
       - name: Upload to Dropbox
-        uses: git9527/deploy-to-dropbox@v12
+        uses: git9527/deploy-to-dropbox@v15
         with:
           DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
           DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
@@ -154,7 +154,7 @@ jobs:
         run: cd scripts && sh common-github-build.sh "so" "LinuxX6438"
 
       - name: Upload to Dropbox
-        uses: git9527/deploy-to-dropbox@v12
+        uses: git9527/deploy-to-dropbox@v15
         with:
           DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
           DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
@@ -195,7 +195,7 @@ jobs:
         run: cd scripts && sh common-github-build.sh "so" "LinuxX6439"
 
       - name: Upload to Dropbox
-        uses: git9527/deploy-to-dropbox@v12
+        uses: git9527/deploy-to-dropbox@v15
         with:
           DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
           DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
@@ -236,7 +236,7 @@ jobs:
         run: cd scripts && sh common-github-build.sh "so" "LinuxX64311"
 
       - name: Upload to Dropbox
-        uses: git9527/deploy-to-dropbox@v12
+        uses: git9527/deploy-to-dropbox@v15
         with:
           DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
           DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
@@ -274,7 +274,7 @@ jobs:
         run: cd scripts && sh common-github-build-mac.sh "so" "DarwinX6438"
 
       - name: Upload to Dropbox
-        uses: git9527/deploy-to-dropbox@v12
+        uses: git9527/deploy-to-dropbox@v15
         with:
           DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
           DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
@@ -313,7 +313,7 @@ jobs:
         run: cd scripts && sh common-github-build-mac.sh "so" "DarwinX6439"
 
       - name: Upload to Dropbox
-        uses: git9527/deploy-to-dropbox@v12
+        uses: git9527/deploy-to-dropbox@v15
         with:
           DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
           DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
@@ -352,7 +352,7 @@ jobs:
         run: cd scripts && sh common-github-build-arm.sh "so" "DarwinArm6439"
 
       - name: Upload to Dropbox
-        uses: git9527/deploy-to-dropbox@v12
+        uses: git9527/deploy-to-dropbox@v15
         with:
           DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
           DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
