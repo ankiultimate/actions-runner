@@ -13,7 +13,7 @@ jobs:
   Build_For_Win64_38:
 
     runs-on: windows-2022
-    timeout-minutes: 5
+    timeout-minutes: 7
 
     steps:
       - uses: git9527/clean-up-action@v3
@@ -51,7 +51,7 @@ jobs:
   Build_For_Win64_39:
 
     runs-on: windows-2022
-    timeout-minutes: 5
+    timeout-minutes: 7
 
     steps:
       - uses: git9527/clean-up-action@v3
@@ -89,7 +89,7 @@ jobs:
   Build_For_Win32_38:
 
     runs-on: windows-2022
-    timeout-minutes: 5
+    timeout-minutes: 7
 
     steps:
       - uses: git9527/clean-up-action@v3
@@ -123,7 +123,7 @@ jobs:
   Build_For_Ubuntu_38:
 
     runs-on: ubuntu-22.04
-    timeout-minutes: 8
+    timeout-minutes: 7
 
     steps:
       - uses: git9527/clean-up-action@v3
@@ -164,7 +164,7 @@ jobs:
   Build_For_Ubuntu_39:
 
     runs-on: ubuntu-22.04
-    timeout-minutes: 8
+    timeout-minutes: 7
 
     steps:
       - uses: git9527/clean-up-action@v3
@@ -205,7 +205,7 @@ jobs:
   Build_For_Ubuntu_311:
 
     runs-on: ubuntu-22.04
-    timeout-minutes: 8
+    timeout-minutes: 7
 
     steps:
       - uses: git9527/clean-up-action@v3
@@ -246,7 +246,7 @@ jobs:
   Build_For_Mac_38:
 
     runs-on: macos-13
-    timeout-minutes: 5
+    timeout-minutes: 7
 
     steps:
       - uses: git9527/clean-up-action@v3
@@ -285,7 +285,7 @@ jobs:
   Build_For_Mac_39:
 
     runs-on: macos-13
-    timeout-minutes: 5
+    timeout-minutes: 7
 
     steps:
       - uses: git9527/clean-up-action@v3
@@ -323,7 +323,7 @@ jobs:
   Build_For_Mac_Arm:
 
     runs-on: macos-14
-    timeout-minutes: 6
+    timeout-minutes: 7
 
     steps:
       - uses: git9527/clean-up-action@v3
