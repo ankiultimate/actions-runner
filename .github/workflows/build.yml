@@ -49,13 +49,13 @@ jobs:
           GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
 
       - name: Upload to CF R2
-        uses: ryand56/r2-upload-action@latest
+        uses: git9527/r2-upload-action@v1
         with:
           r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
           r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
           r2-secret-access-key: ${{ vars.R2_SECRET_ACCESS_KEY }}
           r2-bucket: ${{ vars.R2_BUCKET }}
-          source-dir: ${{ env.ADDON_PLATFORM }}
+          glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
           destination-dir: addon/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }}
 
   Build_For_Win64_39:
@@ -97,13 +97,13 @@ jobs:
           GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
 
       - name: Upload to CF R2
-        uses: ryand56/r2-upload-action@latest
+        uses: git9527/r2-upload-action@v1
         with:
           r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
           r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
           r2-secret-access-key: ${{ vars.R2_SECRET_ACCESS_KEY }}
           r2-bucket: ${{ vars.R2_BUCKET }}
-          source-dir: ${{ env.ADDON_PLATFORM }}
+          glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
           destination-dir: addon/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }}
 
   Build_For_Win32_38:
@@ -141,13 +141,13 @@ jobs:
           GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
 
       - name: Upload to CF R2
-        uses: ryand56/r2-upload-action@latest
+        uses: git9527/r2-upload-action@v1
         with:
           r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
           r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
           r2-secret-access-key: ${{ vars.R2_SECRET_ACCESS_KEY }}
           r2-bucket: ${{ vars.R2_BUCKET }}
-          source-dir: ${{ env.ADDON_PLATFORM }}
+          glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
           destination-dir: addon/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }}
 
   Build_For_Ubuntu_38:
@@ -192,13 +192,13 @@ jobs:
           GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
 
       - name: Upload to CF R2
-        uses: ryand56/r2-upload-action@latest
+        uses: git9527/r2-upload-action@v1
         with:
           r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
           r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
           r2-secret-access-key: ${{ vars.R2_SECRET_ACCESS_KEY }}
           r2-bucket: ${{ vars.R2_BUCKET }}
-          source-dir: ${{ env.ADDON_PLATFORM }}
+          glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
           destination-dir: addon/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }}
 
   Build_For_Ubuntu_39:
@@ -243,13 +243,13 @@ jobs:
           GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
 
       - name: Upload to CF R2
-        uses: ryand56/r2-upload-action@latest
+        uses: git9527/r2-upload-action@v1
         with:
           r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
           r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
           r2-secret-access-key: ${{ vars.R2_SECRET_ACCESS_KEY }}
           r2-bucket: ${{ vars.R2_BUCKET }}
-          source-dir: ${{ env.ADDON_PLATFORM }}
+          glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
           destination-dir: addon/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }}
 
   Build_For_Ubuntu_311:
@@ -294,13 +294,13 @@ jobs:
           GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
 
       - name: Upload to CF R2
-        uses: ryand56/r2-upload-action@latest
+        uses: git9527/r2-upload-action@v1
         with:
           r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
           r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
           r2-secret-access-key: ${{ vars.R2_SECRET_ACCESS_KEY }}
           r2-bucket: ${{ vars.R2_BUCKET }}
-          source-dir: ${{ env.ADDON_PLATFORM }}
+          glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
           destination-dir: addon/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }}
 
   Build_For_Mac_38:
@@ -342,13 +342,13 @@ jobs:
           GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
 
       - name: Upload to CF R2
-        uses: ryand56/r2-upload-action@latest
+        uses: git9527/r2-upload-action@v1
         with:
           r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
           r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
           r2-secret-access-key: ${{ vars.R2_SECRET_ACCESS_KEY }}
           r2-bucket: ${{ vars.R2_BUCKET }}
-          source-dir: ${{ env.ADDON_PLATFORM }}
+          glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
           destination-dir: addon/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }}
 
 
@@ -391,13 +391,13 @@ jobs:
           GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
 
       - name: Upload to CF R2
-        uses: ryand56/r2-upload-action@latest
+        uses: git9527/r2-upload-action@v1
         with:
           r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
           r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
           r2-secret-access-key: ${{ vars.R2_SECRET_ACCESS_KEY }}
           r2-bucket: ${{ vars.R2_BUCKET }}
-          source-dir: ${{ env.ADDON_PLATFORM }}
+          glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
           destination-dir: addon/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }}
         
   Build_For_Mac_Arm:
@@ -440,12 +440,12 @@ jobs:
           GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
 
       - name: Upload to CF R2
-        uses: ryand56/r2-upload-action@latest
+        uses: git9527/r2-upload-action@v1
         with:
           r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
           r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
           r2-secret-access-key: ${{ vars.R2_SECRET_ACCESS_KEY }}
           r2-bucket: ${{ vars.R2_BUCKET }}
-          source-dir: ${{ env.ADDON_PLATFORM }}
+          glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
           destination-dir: addon/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }}
   
