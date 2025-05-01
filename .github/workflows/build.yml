@@ -56,7 +56,7 @@ jobs:
           r2-secret-access-key: ${{ vars.R2_SECRET_ACCESS_KEY }}
           r2-bucket: ${{ vars.R2_BUCKET }}
           glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
-          destination-dir: addon/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }}
+          destination-dir: addon/${{ env.ADDON_VERSION }}
 
   Build_For_Win64_39:
 
