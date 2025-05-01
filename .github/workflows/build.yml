@@ -49,7 +49,7 @@ jobs:
           GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
 
       - name: Upload to CF R2
-        uses: git9527/r2-upload-action@latest
+        uses: git9527/r2-upload-action@v2
         with:
           r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
           r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
@@ -97,7 +97,7 @@ jobs:
           GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
 
       - name: Upload to CF R2
-        uses: git9527/r2-upload-action@latest
+        uses: git9527/r2-upload-action@v2
         with:
           r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
           r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
@@ -141,7 +141,7 @@ jobs:
           GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
 
       - name: Upload to CF R2
-        uses: git9527/r2-upload-action@latest
+        uses: git9527/r2-upload-action@v2
         with:
           r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
           r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
@@ -192,7 +192,7 @@ jobs:
           GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
 
       - name: Upload to CF R2
-        uses: git9527/r2-upload-action@latest
+        uses: git9527/r2-upload-action@v2
         with:
           r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
           r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
@@ -243,7 +243,7 @@ jobs:
           GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
 
       - name: Upload to CF R2
-        uses: git9527/r2-upload-action@latest
+        uses: git9527/r2-upload-action@v2
         with:
           r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
           r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
@@ -294,7 +294,7 @@ jobs:
           GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
 
       - name: Upload to CF R2
-        uses: git9527/r2-upload-action@latest
+        uses: git9527/r2-upload-action@v2
         with:
           r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
           r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
@@ -342,7 +342,7 @@ jobs:
           GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
 
       - name: Upload to CF R2
-        uses: git9527/r2-upload-action@latest
+        uses: git9527/r2-upload-action@v2
         with:
           r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
           r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
@@ -391,7 +391,7 @@ jobs:
           GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
 
       - name: Upload to CF R2
-        uses: git9527/r2-upload-action@latest
+        uses: git9527/r2-upload-action@v2
         with:
           r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
           r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
@@ -440,7 +440,7 @@ jobs:
           GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
 
       - name: Upload to CF R2
-        uses: git9527/r2-upload-action@latest
+        uses: git9527/r2-upload-action@v2
         with:
           r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
           r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
