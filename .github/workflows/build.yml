@@ -48,6 +48,17 @@ jobs:
           DROPBOX_DESTINATION_PATH_PREFIX: /${{ env.ADDON_VERSION }}/
           GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
 
+      - name: Install aws-cli
+        uses: unfor19/install-aws-cli-action@v1
+
+      - name: Upload to CF R2
+        run: |
+          aws s3 sync ${{ env.ADDON_PLATFORM }} s3://${{ vars.R2_BUCKET }}/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }} --endpoint-url ${{ vars.R2_ENDPOINT }} --delete --exclude ".*" --checksum-algorithm CRC32 --size-only
+        env:
+          AWS_ACCESS_KEY_ID: ${{ vars.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ vars.R2_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ vars.R2_REGION }}
+
   Build_For_Win64_39:
 
     runs-on: windows-2022
@@ -86,6 +97,17 @@ jobs:
           DROPBOX_DESTINATION_PATH_PREFIX: /${{ env.ADDON_VERSION }}/
           GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
 
+      - name: Install aws-cli
+        uses: unfor19/install-aws-cli-action@v1
+
+      - name: Upload to CF R2
+        run: |
+          aws s3 sync ${{ env.ADDON_PLATFORM }} s3://${{ vars.R2_BUCKET }}/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }} --endpoint-url ${{ vars.R2_ENDPOINT }} --delete --exclude ".*" --checksum-algorithm CRC32 --size-only
+        env:
+          AWS_ACCESS_KEY_ID: ${{ vars.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ vars.R2_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ vars.R2_REGION }}
+
   Build_For_Win32_38:
 
     runs-on: windows-2022
@@ -119,6 +141,17 @@ jobs:
           DROPBOX_APP_SECRET: ${{ secrets.DROPBOX_APP_SECRET }}
           DROPBOX_DESTINATION_PATH_PREFIX: /${{ env.ADDON_VERSION }}/
           GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
+
+      - name: Install aws-cli
+        uses: unfor19/install-aws-cli-action@v1
+
+      - name: Upload to CF R2
+        run: |
+          aws s3 sync ${{ env.ADDON_PLATFORM }} s3://${{ vars.R2_BUCKET }}/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }} --endpoint-url ${{ vars.R2_ENDPOINT }} --delete --exclude ".*" --checksum-algorithm CRC32 --size-only
+        env:
+          AWS_ACCESS_KEY_ID: ${{ vars.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ vars.R2_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ vars.R2_REGION }}
 
   Build_For_Ubuntu_38:
 
@@ -161,6 +194,17 @@ jobs:
           DROPBOX_DESTINATION_PATH_PREFIX: /${{ env.ADDON_VERSION }}/
           GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
 
+      - name: Install aws-cli
+        uses: unfor19/install-aws-cli-action@v1
+
+      - name: Upload to CF R2
+        run: |
+          aws s3 sync ${{ env.ADDON_PLATFORM }} s3://${{ vars.R2_BUCKET }}/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }} --endpoint-url ${{ vars.R2_ENDPOINT }} --delete --exclude ".*" --checksum-algorithm CRC32 --size-only
+        env:
+          AWS_ACCESS_KEY_ID: ${{ vars.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ vars.R2_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ vars.R2_REGION }}
+
   Build_For_Ubuntu_39:
 
     runs-on: ubuntu-22.04
@@ -201,6 +245,17 @@ jobs:
           DROPBOX_APP_SECRET: ${{ secrets.DROPBOX_APP_SECRET }}
           DROPBOX_DESTINATION_PATH_PREFIX: /${{ env.ADDON_VERSION }}/
           GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
+
+      - name: Install aws-cli
+        uses: unfor19/install-aws-cli-action@v1
+
+      - name: Upload to CF R2
+        run: |
+          aws s3 sync ${{ env.ADDON_PLATFORM }} s3://${{ vars.R2_BUCKET }}/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }} --endpoint-url ${{ vars.R2_ENDPOINT }} --delete --exclude ".*" --checksum-algorithm CRC32 --size-only
+        env:
+          AWS_ACCESS_KEY_ID: ${{ vars.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ vars.R2_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ vars.R2_REGION }}
 
   Build_For_Ubuntu_311:
 
@@ -243,6 +298,17 @@ jobs:
           DROPBOX_DESTINATION_PATH_PREFIX: /${{ env.ADDON_VERSION }}/
           GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
 
+      - name: Install aws-cli
+        uses: unfor19/install-aws-cli-action@v1
+
+      - name: Upload to CF R2
+        run: |
+          aws s3 sync ${{ env.ADDON_PLATFORM }} s3://${{ vars.R2_BUCKET }}/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }} --endpoint-url ${{ vars.R2_ENDPOINT }} --delete --exclude ".*" --checksum-algorithm CRC32 --size-only
+        env:
+          AWS_ACCESS_KEY_ID: ${{ vars.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ vars.R2_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ vars.R2_REGION }}
+
   Build_For_Mac_38:
 
     runs-on: macos-13
@@ -280,6 +346,17 @@ jobs:
           DROPBOX_APP_SECRET: ${{ secrets.DROPBOX_APP_SECRET }}
           DROPBOX_DESTINATION_PATH_PREFIX: /${{ env.ADDON_VERSION }}/
           GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
+
+      - name: Install aws-cli
+        uses: unfor19/install-aws-cli-action@v1
+
+      - name: Upload to CF R2
+        run: |
+          aws s3 sync ${{ env.ADDON_PLATFORM }} s3://${{ vars.R2_BUCKET }}/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }} --endpoint-url ${{ vars.R2_ENDPOINT }} --delete --exclude ".*" --checksum-algorithm CRC32 --size-only
+        env:
+          AWS_ACCESS_KEY_ID: ${{ vars.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ vars.R2_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ vars.R2_REGION }}
 
 
   Build_For_Mac_39:
@@ -319,6 +396,17 @@ jobs:
           DROPBOX_APP_SECRET: ${{ secrets.DROPBOX_APP_SECRET }}
           DROPBOX_DESTINATION_PATH_PREFIX: /${{ env.ADDON_VERSION }}/
           GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
+
+      - name: Install aws-cli
+        uses: unfor19/install-aws-cli-action@v1
+
+      - name: Upload to CF R2
+        run: |
+          aws s3 sync ${{ env.ADDON_PLATFORM }} s3://${{ vars.R2_BUCKET }}/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }} --endpoint-url ${{ vars.R2_ENDPOINT }} --delete --exclude ".*" --checksum-algorithm CRC32 --size-only
+        env:
+          AWS_ACCESS_KEY_ID: ${{ vars.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ vars.R2_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ vars.R2_REGION }}
         
   Build_For_Mac_Arm:
 
@@ -358,4 +446,15 @@ jobs:
           DROPBOX_APP_SECRET: ${{ secrets.DROPBOX_APP_SECRET }}
           DROPBOX_DESTINATION_PATH_PREFIX: /${{ env.ADDON_VERSION }}/
           GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
+
+      - name: Install aws-cli
+        uses: unfor19/install-aws-cli-action@v1
+
+      - name: Upload to CF R2
+        run: |
+          aws s3 sync ${{ env.ADDON_PLATFORM }} s3://${{ vars.R2_BUCKET }}/${{ env.ADDON_VERSION }}/${{ env.ADDON_PLATFORM }} --endpoint-url ${{ vars.R2_ENDPOINT }} --delete --exclude ".*" --checksum-algorithm CRC32 --size-only
+        env:
+          AWS_ACCESS_KEY_ID: ${{ vars.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ vars.R2_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ vars.R2_REGION }}
   
