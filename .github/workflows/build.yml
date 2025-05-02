@@ -6,6 +6,8 @@ on:
       branch:
         description: 'Target remote branch name'
         default: 'master'
+  repository_dispatch:
+    types: [ other-repo-updated ]
 
 
 jobs:
