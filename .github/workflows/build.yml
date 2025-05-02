@@ -2,18 +2,24 @@ name: Build All Packages
 
 on:
   workflow_dispatch:
-    inputs:
-      branch:
-        description: 'Target remote branch name'
-        default: 'master'
   repository_dispatch:
-    types: [ other-repo-updated ]
+    types: [ lib-repo-updated ]
 
 
 jobs:
 
-  Build_For_Win64_38:
+  Prepare_Version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.extract-version.outputs.version }}
+    steps:
+      - id: extract-version
+        run: |
+          VERSION="${{ github.event.client_payload.version }}"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
+  Build_For_Win64_38:
+    needs: Prepare_Version
     runs-on: windows-2022
     timeout-minutes: 7
 
@@ -24,7 +30,7 @@ jobs:
         with:
           repository: ${{ vars.MY_REPO }}
           ssh-key: ${{ secrets.SSH_KEY }}
-          ref: ${{ github.event.inputs.branch }}
+          ref: master
       - name: Set up Python
         uses: actions/setup-python@v5.1.0
         with:
@@ -61,7 +67,7 @@ jobs:
           destination-dir: addon/${{ env.ADDON_VERSION }}
 
   Build_For_Win64_39:
-
+    needs: Prepare_Version
     runs-on: windows-2022
     timeout-minutes: 7
 
@@ -72,7 +78,7 @@ jobs:
         with:
           repository: ${{ vars.MY_REPO }}
           ssh-key: ${{ secrets.SSH_KEY }}
-          ref: ${{ github.event.inputs.branch }}
+          ref: master
       - name: Set up Python
         uses: actions/setup-python@v5.1.0
         with:
@@ -109,7 +115,7 @@ jobs:
           destination-dir: addon/${{ env.ADDON_VERSION }}
 
   Build_For_Win32_38:
-
+    needs: Prepare_Version
     runs-on: windows-2022
     timeout-minutes: 7
 
@@ -120,7 +126,7 @@ jobs:
         with:
           repository: ${{ vars.MY_REPO }}
           ssh-key: ${{ secrets.SSH_KEY }}
-          ref: ${{ github.event.inputs.branch }}
+          ref: master
       - name: Set up Python
         uses: actions/setup-python@v5.1.0
         with:
@@ -153,7 +159,7 @@ jobs:
           destination-dir: addon/${{ env.ADDON_VERSION }}
 
   Build_For_Ubuntu_38:
-
+    needs: Prepare_Version
     runs-on: ubuntu-22.04
     timeout-minutes: 7
 
@@ -164,7 +170,7 @@ jobs:
         with:
           repository: ${{ vars.MY_REPO }}
           ssh-key: ${{ secrets.SSH_KEY }}
-          ref: ${{ github.event.inputs.branch }}
+          ref: master
       - name: Set up Python
         uses: actions/setup-python@v5.1.0
         with:
@@ -204,7 +210,7 @@ jobs:
           destination-dir: addon/${{ env.ADDON_VERSION }}
 
   Build_For_Ubuntu_39:
-
+    needs: Prepare_Version
     runs-on: ubuntu-22.04
     timeout-minutes: 7
 
@@ -215,7 +221,7 @@ jobs:
         with:
           repository: ${{ vars.MY_REPO }}
           ssh-key: ${{ secrets.SSH_KEY }}
-          ref: ${{ github.event.inputs.branch }}
+          ref: master
       - name: Set up Python
         uses: actions/setup-python@v5.1.0
         with:
@@ -255,7 +261,7 @@ jobs:
           destination-dir: addon/${{ env.ADDON_VERSION }}
 
   Build_For_Ubuntu_311:
-
+    needs: Prepare_Version
     runs-on: ubuntu-22.04
     timeout-minutes: 7
 
@@ -266,7 +272,7 @@ jobs:
         with:
           repository: ${{ vars.MY_REPO }}
           ssh-key: ${{ secrets.SSH_KEY }}
-          ref: ${{ github.event.inputs.branch }}
+          ref: master
       - name: Set up Python
         uses: actions/setup-python@v5.1.0
         with:
@@ -306,7 +312,7 @@ jobs:
           destination-dir: addon/${{ env.ADDON_VERSION }}
 
   Build_For_Mac_38:
-
+    needs: Prepare_Version
     runs-on: macos-13
     timeout-minutes: 7
 
@@ -317,7 +323,7 @@ jobs:
         with:
           repository: ${{ vars.MY_REPO }}
           ssh-key: ${{ secrets.SSH_KEY }}
-          ref: ${{ github.event.inputs.branch }}
+          ref: master
       - name: Set up Python
         uses: actions/setup-python@v5.1.0
         with:
@@ -355,7 +361,7 @@ jobs:
 
 
   Build_For_Mac_39:
-
+    needs: Prepare_Version
     runs-on: macos-13
     timeout-minutes: 7
 
@@ -366,7 +372,7 @@ jobs:
         with:
           repository: ${{ vars.MY_REPO }}
           ssh-key: ${{ secrets.SSH_KEY }}
-          ref: ${{ github.event.inputs.branch }}
+          ref: master
       - name: Set up Python
         uses: actions/setup-python@v5.1.0
         with:
@@ -403,7 +409,7 @@ jobs:
           destination-dir: addon/${{ env.ADDON_VERSION }}
         
   Build_For_Mac_Arm:
-
+    needs: Prepare_Version
     runs-on: macos-14
     timeout-minutes: 7
 
@@ -414,7 +420,7 @@ jobs:
         with:
           repository: ${{ vars.MY_REPO }}
           ssh-key: ${{ secrets.SSH_KEY }}
-          ref: ${{ github.event.inputs.branch }}
+          ref: master
       - name: Set up Python
         run: |
           brew reinstall python@3.9
