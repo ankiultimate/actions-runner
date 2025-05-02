@@ -2,9 +2,17 @@ name: Build All Packages
 
 on:
   workflow_dispatch:
+    input:
+      version:
+        default: "latest"
+        
   repository_dispatch:
     types: [ lib-repo-updated ]
 
+env:
+  TIMEOUT_MINUTES: 8
+
+run-name: Build All Packages with version - ${{ github.event.client_payload.version || github.event.inputs.version }}
 
 jobs:
 
@@ -21,7 +29,7 @@ jobs:
   Build_For_Win64_38:
     needs: Prepare_Version
     runs-on: windows-2022
-    timeout-minutes: 7
+    timeout-minutes: ${{ env.TIMEOUT_MINUTES }}
 
     steps:
       - uses: git9527/clean-up-action@v3
@@ -69,7 +77,7 @@ jobs:
   Build_For_Win64_39:
     needs: Prepare_Version
     runs-on: windows-2022
-    timeout-minutes: 7
+    timeout-minutes: ${{ env.TIMEOUT_MINUTES }}
 
     steps:
       - uses: git9527/clean-up-action@v3
@@ -117,7 +125,7 @@ jobs:
   Build_For_Win32_38:
     needs: Prepare_Version
     runs-on: windows-2022
-    timeout-minutes: 7
+    timeout-minutes: ${{ env.TIMEOUT_MINUTES }}
 
     steps:
       - uses: git9527/clean-up-action@v3
@@ -161,7 +169,7 @@ jobs:
   Build_For_Ubuntu_38:
     needs: Prepare_Version
     runs-on: ubuntu-22.04
-    timeout-minutes: 7
+    timeout-minutes: ${{ env.TIMEOUT_MINUTES }}
 
     steps:
       - uses: git9527/clean-up-action@v3
@@ -212,7 +220,7 @@ jobs:
   Build_For_Ubuntu_39:
     needs: Prepare_Version
     runs-on: ubuntu-22.04
-    timeout-minutes: 7
+    timeout-minutes: ${{ env.TIMEOUT_MINUTES }}
 
     steps:
       - uses: git9527/clean-up-action@v3
@@ -263,7 +271,7 @@ jobs:
   Build_For_Ubuntu_311:
     needs: Prepare_Version
     runs-on: ubuntu-22.04
-    timeout-minutes: 7
+    timeout-minutes: ${{ env.TIMEOUT_MINUTES }}
 
     steps:
       - uses: git9527/clean-up-action@v3
@@ -314,7 +322,7 @@ jobs:
   Build_For_Mac_38:
     needs: Prepare_Version
     runs-on: macos-13
-    timeout-minutes: 7
+    timeout-minutes: ${{ env.TIMEOUT_MINUTES }}
 
     steps:
       - uses: git9527/clean-up-action@v3
@@ -363,7 +371,7 @@ jobs:
   Build_For_Mac_39:
     needs: Prepare_Version
     runs-on: macos-13
-    timeout-minutes: 7
+    timeout-minutes: ${{ env.TIMEOUT_MINUTES }}
 
     steps:
       - uses: git9527/clean-up-action@v3
@@ -411,7 +419,7 @@ jobs:
   Build_For_Mac_Arm:
     needs: Prepare_Version
     runs-on: macos-14
-    timeout-minutes: 7
+    timeout-minutes: ${{ env.TIMEOUT_MINUTES }}
 
     steps:
       - uses: git9527/clean-up-action@v3
