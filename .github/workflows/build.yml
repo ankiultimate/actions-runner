@@ -2,8 +2,9 @@ name: Build All Packages
 
 on:
   workflow_dispatch:
-    input:
+    inputs:
       version:
+        description: "Manual input version"
         default: "latest"
 
   repository_dispatch:
@@ -21,7 +22,7 @@ jobs:
       - id: extract-version
         run: |
           VERSION="${{ github.event.client_payload.version }}"
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "version=$VERSION" >> $GITHUB_ENV
 
   Build_For_Win64_38:
     needs: Prepare_Version
