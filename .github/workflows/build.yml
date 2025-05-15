@@ -38,7 +38,7 @@ jobs:
           ssh-key: ${{ secrets.SSH_KEY }}
           ref: master
       - name: Set up Python
-        uses: actions/setup-python@v5.1.0
+        uses: actions/setup-python@v5
         with:
           python-version: '3.8'
           cache: 'pip'
@@ -86,7 +86,7 @@ jobs:
           ssh-key: ${{ secrets.SSH_KEY }}
           ref: master
       - name: Set up Python
-        uses: actions/setup-python@v5.1.0
+        uses: actions/setup-python@v5
         with:
           python-version: '3.9'
           cache: 'pip'
@@ -134,7 +134,7 @@ jobs:
           ssh-key: ${{ secrets.SSH_KEY }}
           ref: master
       - name: Set up Python
-        uses: actions/setup-python@v5.1.0
+        uses: actions/setup-python@v5
         with:
           python-version: '3.8'
           cache: 'pip'
@@ -178,7 +178,7 @@ jobs:
           ssh-key: ${{ secrets.SSH_KEY }}
           ref: master
       - name: Set up Python
-        uses: actions/setup-python@v5.1.0
+        uses: actions/setup-python@v5
         with:
           python-version: '3.8'
           cache: 'pip'
@@ -229,7 +229,7 @@ jobs:
           ssh-key: ${{ secrets.SSH_KEY }}
           ref: master
       - name: Set up Python
-        uses: actions/setup-python@v5.1.0
+        uses: actions/setup-python@v5
         with:
           python-version: '3.9'
           cache: 'pip'
@@ -280,7 +280,7 @@ jobs:
           ssh-key: ${{ secrets.SSH_KEY }}
           ref: master
       - name: Set up Python
-        uses: actions/setup-python@v5.1.0
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
           cache: 'pip'
@@ -331,7 +331,7 @@ jobs:
           ssh-key: ${{ secrets.SSH_KEY }}
           ref: master
       - name: Set up Python
-        uses: actions/setup-python@v5.1.0
+        uses: actions/setup-python@v5
         with:
           python-version: '3.8'
           cache: 'pip'
@@ -380,7 +380,7 @@ jobs:
           ssh-key: ${{ secrets.SSH_KEY }}
           ref: master
       - name: Set up Python
-        uses: actions/setup-python@v5.1.0
+        uses: actions/setup-python@v5
         with:
           python-version: '3.9'
           cache: 'pip'
