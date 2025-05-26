@@ -32,7 +32,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: ${{ vars.MY_REPO_WIN }}
-          ssh-key: ${{ secrets.SSH_KEY }}
+          ssh-key: ${{ secrets.SSH_KEY_WIN }}
           ref: master
       - name: Set up Python
         uses: actions/setup-python@v5
