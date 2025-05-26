@@ -44,12 +44,12 @@ jobs:
           cache: 'pip'
       - name: Install dependencies
         run: pip install -r requirements.txt
-        
+
       - name: Run tests
         env:
-            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
+          PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
         run: pytest tests
-        
+
       - name: Build binaries
         run: cd scripts && sh common-github-build.sh "pyd" "WindowsAMD6438"
 
@@ -92,12 +92,12 @@ jobs:
           cache: 'pip'
       - name: Install dependencies
         run: pip install -r requirements.txt
-        
+
       - name: Run tests
         env:
-            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
+          PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
         run: pytest tests
-        
+
       - name: Build binaries
         run: cd scripts && sh common-github-build.sh "pyd" "WindowsAMD6439"
 
@@ -141,7 +141,7 @@ jobs:
           architecture: 'x86'
       - name: Install dependencies
         run: pip install -r requirements-win38.txt
-        
+
       - name: Build binaries
         run: cd scripts && sh common-github-build.sh "pyd" "WindowsX8638"
 
@@ -182,17 +182,17 @@ jobs:
         with:
           python-version: '3.8'
           cache: 'pip'
-          
+
       - name: Install dependencies
         run: |
           pip install --upgrade pip==23
           pip install -r requirements.txt
-        
+
       - name: Run tests
         env:
-            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
+          PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
         run: pytest tests
-        
+
       - name: Build binaries
         run: cd scripts && sh common-github-build.sh "so" "LinuxX6438"
 
@@ -233,17 +233,17 @@ jobs:
         with:
           python-version: '3.9'
           cache: 'pip'
-          
+
       - name: Install dependencies
         run: |
           pip install --upgrade pip==23
           pip install -r requirements.txt
-        
+
       - name: Run tests
         env:
-            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
+          PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
         run: pytest tests
-        
+
       - name: Build binaries
         run: cd scripts && sh common-github-build.sh "so" "LinuxX6439"
 
@@ -284,17 +284,17 @@ jobs:
         with:
           python-version: '3.11'
           cache: 'pip'
-          
+
       - name: Install dependencies
         run: |
           pip install --upgrade pip==23
           pip install -r requirements.txt
-          
+
       - name: Run tests
         env:
-            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
+          PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
         run: pytest tests
-        
+
       - name: Build binaries
         run: cd scripts && sh common-github-build.sh "so" "LinuxX64311"
 
@@ -337,12 +337,12 @@ jobs:
           cache: 'pip'
       - name: Install dependencies
         run: pip install -r requirements.txt
-        
+
       - name: Run tests
         env:
-            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
+          PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
         run: pytest tests
-        
+
       - name: Build binaries
         run: cd scripts && sh common-github-build-mac.sh "so" "DarwinX6438"
 
@@ -386,12 +386,12 @@ jobs:
           cache: 'pip'
       - name: Install dependencies
         run: pip install -r requirements.txt
-        
+
       - name: Run tests
         env:
-            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
+          PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
         run: pytest tests
-        
+
       - name: Build binaries
         run: cd scripts && sh common-github-build-mac.sh "so" "DarwinX6439"
 
@@ -413,7 +413,7 @@ jobs:
           r2-bucket: ${{ vars.R2_BUCKET }}
           glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
           destination-dir: addon/${{ env.ADDON_VERSION }}
-        
+
   Build_For_Mac_Arm:
     needs: Prepare_Version
     runs-on: macos-14
@@ -432,13 +432,13 @@ jobs:
           brew reinstall python@3.9
           echo "/opt/homebrew/bin" >> $GITHUB_PATH
           python3.9 -V
-        
+
       - name: Install dependencies
         run: pip3.9 install -r requirements-arm.txt
 
       - name: Run tests
         env:
-            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
+          PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
         run: pytest tests
 
       - name: Build binaries

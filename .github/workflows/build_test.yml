@@ -4,12 +4,12 @@ on:
   workflow_dispatch:
 
 jobs:
-    
+
   Build_For_Ubuntu_311:
     
     runs-on: ubuntu-22.04
     timeout-minutes: 4
-  
+
     steps:
       - uses: git9527/clean-up-action@v3
       - name: Checkout source code
@@ -28,22 +28,21 @@ jobs:
           pip install -r requirements.txt
       - name: Run tests
         env:
-            PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
+          PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
         run: pytest tests
-        
+
       - name: Build binaries
         run: cd scripts && sh common-github-build.sh "so" "LinuxX64311"
-  
+
       - name: Set up Aliyun OSS
         uses: yizhoumo/setup-ossutil@v1
         with:
           endpoint: oss-cn-shanghai.aliyuncs.com
           access-key-id: ${{ secrets.OSS_KEY_ID }}
           access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
-  
+
       - name: Sync file to OSS
         run: |
           pwd 
           ossutil cp ${{ env.ADDON_PLATFORM }}.zip oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
           ossutil cp ${{ env.ADDON_PLATFORM }}-hash.txt oss://${{ vars.OSS_KEY_BUCKET }}/ultimate-template/${{ env.ADDON_VERSION }}/ --force
-
