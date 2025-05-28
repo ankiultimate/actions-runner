@@ -462,4 +462,19 @@ jobs:
           r2-bucket: ${{ vars.R2_BUCKET }}
           glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
           destination-dir: addon/${{ env.ADDON_VERSION }}
+
+  Notify_Addon_Build:
+    needs: [Build_For_Win64_38, Build_For_Win64_39, Build_For_Win32_38, Build_For_Ubuntu_38, Build_For_Ubuntu_39, Build_For_Ubuntu_311, Build_For_Mac_38, Build_For_Mac_39, Build_For_Mac_Arm]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract version
+        run: echo "ADDON_VERSION=${{ github.event.client_payload.version || github.event.inputs.version }}" >> $GITHUB_ENV
+
+      - name: Call Addon Dispatch
+        run: |
+          curl -i -X POST https://api.github.com/repos/${{ vars.ADDON_REPO }}/dispatches \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.ULTIMATE_ADDON_PERSONAL_TOKEN }}" \
+            -d '{"event_type":"lib-repo-updated","client_payload":{"version":"${{ env.ADDON_VERSION }}"}}'
+        
   
