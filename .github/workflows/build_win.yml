@@ -89,4 +89,4 @@ jobs:
           curl -i -X POST https://api.github.com/repos/${{ vars.ADDON_REPO_WIN }}/dispatches \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ secrets.ULTIMATE_ADDON_PERSONAL_TOKEN }}" \
-            -d '{"event_type":"lib-repo-updated","client_payload":{"version":"${{ env.ADDON_VERSION }}"}}'
+            -d '{"event_type":"lib-build-success","client_payload":{"version":"${{ env.ADDON_VERSION }}"}}'
