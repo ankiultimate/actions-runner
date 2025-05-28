@@ -71,3 +71,22 @@ jobs:
           r2-bucket: ${{ vars.R2_BUCKET }}
           glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
           destination-dir: addon-win/${{ env.ADDON_VERSION }}
+
+  Notify_Addon_Build:
+    needs: [ Build_For_Win64_39 ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show current Run Id
+        run: |
+          echo "Current Run Id: ${{ github.run_id }}"
+          echo "Current Run number: ${{ github.run_number }}"
+
+      - name: Extract version
+        run: echo "ADDON_VERSION=${{ github.event.client_payload.version || github.event.inputs.version }}" >> $GITHUB_ENV
+
+      - name: Call Addon Dispatch
+        run: |
+          curl -i -X POST https://api.github.com/repos/${{ vars.ADDON_REPO_WIN }}/dispatches \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.ULTIMATE_ADDON_PERSONAL_TOKEN }}" \
+            -d '{"event_type":"lib-repo-updated","client_payload":{"version":"${{ env.ADDON_VERSION }}"}}'
