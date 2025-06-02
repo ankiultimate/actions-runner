@@ -93,10 +93,13 @@ jobs:
         with:
           name: addon-win-abi.whl
 
+      - name: Extract version
+        run: echo "ADDON_VERSION=${{ github.event.client_payload.version || github.event.inputs.version }}" >> $GITHUB_ENV
+
       - name: Install packages
         run: |
           ls
-          python -m pip install anki_ultimate-*.whl
+          python -m pip install anki_ultimate-${{ env.ADDON_VERSION }}-cp38-abi3-win_amd64.whl
 
   Verify_ABI_In_Win64_39:
     needs: Build_For_Win64_38
@@ -113,10 +116,13 @@ jobs:
         with:
           name: addon-win-abi.whl
 
+      - name: Extract version
+        run: echo "ADDON_VERSION=${{ github.event.client_payload.version || github.event.inputs.version }}" >> $GITHUB_ENV
+
       - name: Install packages
         run: |
           ls
-          python -m pip install anki_ultimate-*.whl
+          python -m pip install anki_ultimate-${{ env.ADDON_VERSION }}-cp38-abi3-win_amd64.whl
 
   Notify_Addon_Build:
     needs: [ Verify_ABI_In_Win64_38, Verify_ABI_In_Win64_39 ]
