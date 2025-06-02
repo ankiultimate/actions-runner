@@ -56,7 +56,7 @@ jobs:
       - name: Archive build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: addon-${{ env.ADDON_VERSION }}-${{ env.ADDON_PLATFORM }}
+          name: addon-win-abi
           path: ${{ env.ADDON_PLATFORM }}.zip
 
       - name: Upload to Dropbox
@@ -91,7 +91,7 @@ jobs:
       - name: Retrieve build artifacts
         uses: actions/download-artifact@v4
         with:
-          name: addon-${{ env.ADDON_VERSION }}-${{ env.ADDON_PLATFORM }}
+          name: addon-win-abi
 
       - name: Install packages
         run: |
