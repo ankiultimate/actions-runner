@@ -56,8 +56,8 @@ jobs:
       - name: Archive build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: addon-win-abi
-          path: ${{ env.ADDON_PLATFORM }}.zip
+          name: addon-win-abi.whl
+          path: anki_ultimate-*.whl
 
       - name: Upload to Dropbox
         uses: git9527/deploy-to-dropbox@v22
@@ -91,14 +91,35 @@ jobs:
       - name: Retrieve build artifacts
         uses: actions/download-artifact@v4
         with:
-          name: addon-win-abi
+          name: addon-win-abi.whl
 
       - name: Install packages
         run: |
-          find . -type f -exec ls -l {} +
+          ls -ltrh
+          pip -m install addon-win-abi.whl
+
+  Verify_ABI_In_Win64_39:
+    needs: Build_For_Win64_38
+    runs-on: windows-2022
+    timeout-minutes: 8
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Retrieve build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: addon-win-abi.whl
+
+      - name: Install packages
+        run: |
+          ls -ltrh
+          pip -m install addon-win-abi.whl
 
   Notify_Addon_Build:
-    needs: [ Verify_ABI_In_Win64_38 ]
+    needs: [ Verify_ABI_In_Win64_38, Verify_ABI_In_Win64_39 ]
     runs-on: ubuntu-latest
     steps:
       - name: Show current Run Id
