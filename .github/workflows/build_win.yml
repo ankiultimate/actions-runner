@@ -99,7 +99,8 @@ jobs:
       - name: Install packages
         run: |
           ls
-          python -m pip install "anki_ultimate-${{ env.ADDON_VERSION }}-cp38-abi3-win_amd64.whl"
+          echo "Version is: ${{ env.ADDON_VERSION }}"
+          python -m pip install anki_ultimate-8.3.0.0-cp38-abi3-win_amd64.whl
 
   Verify_ABI_In_Win64_39:
     needs: Build_For_Win64_38
@@ -122,7 +123,8 @@ jobs:
       - name: Install packages
         run: |
           ls
-          python -m pip install "anki_ultimate-${{ env.ADDON_VERSION }}-cp38-abi3-win_amd64.whl"
+          echo "Version is: ${{ env.ADDON_VERSION }}"
+          python -m pip install anki_ultimate-8.3.0.0-cp38-abi3-win_amd64.whl
 
   Notify_Addon_Build:
     needs: [ Verify_ABI_In_Win64_38, Verify_ABI_In_Win64_39 ]
