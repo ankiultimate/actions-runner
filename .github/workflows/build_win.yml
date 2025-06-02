@@ -95,7 +95,7 @@ jobs:
 
       - name: Install packages
         run: |
-          ls -ltrh
+          ls
           pip -m install addon-win-abi.whl
 
   Verify_ABI_In_Win64_39:
@@ -115,7 +115,7 @@ jobs:
 
       - name: Install packages
         run: |
-          ls -ltrh
+          ls
           pip -m install addon-win-abi.whl
 
   Notify_Addon_Build:
