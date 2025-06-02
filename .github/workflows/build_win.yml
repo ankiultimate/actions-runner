@@ -96,7 +96,7 @@ jobs:
       - name: Install packages
         run: |
           ls
-          pip -m install addon-win-abi.whl
+          python -m pip install anki_ultimate-*.whl
 
   Verify_ABI_In_Win64_39:
     needs: Build_For_Win64_38
@@ -116,7 +116,7 @@ jobs:
       - name: Install packages
         run: |
           ls
-          pip -m install addon-win-abi.whl
+          python -m pip install anki_ultimate-*.whl
 
   Notify_Addon_Build:
     needs: [ Verify_ABI_In_Win64_38, Verify_ABI_In_Win64_39 ]
