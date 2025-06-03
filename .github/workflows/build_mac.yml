@@ -8,7 +8,7 @@ on:
         default: "latest"
 
   repository_dispatch:
-    types: [ lib-repo-updated-win ]
+    types: [ lib-repo-updated-mac ]
 
 run-name: Build Mac Intel Packages with version - ${{ github.event.client_payload.version || github.event.inputs.version }}
 

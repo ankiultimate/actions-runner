@@ -8,7 +8,7 @@ on:
         default: "latest"
 
   repository_dispatch:
-    types: [ lib-repo-updated-win ]
+    types: [ lib-repo-updated-linux ]
 
 run-name: Build Linux Packages with version - ${{ github.event.client_payload.version || github.event.inputs.version }}
 

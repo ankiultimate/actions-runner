@@ -1,0 +1,471 @@
+name: Build All Abi Packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Manual input version"
+        default: "latest"
+
+  repository_dispatch:
+    types: [ lib-repo-updated-all ]
+
+run-name: Build Abi Packages with version - ${{ github.event.client_payload.version || github.event.inputs.version }}
+
+jobs:
+
+  Prepare_Version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.extract-version.outputs.version }}
+    steps:
+      - id: extract-version
+        run: |
+          VERSION="${{ github.event.client_payload.version }}"
+          echo "version=$VERSION" >> $GITHUB_ENV
+
+  Build_For_Win32_38:
+    needs: Prepare_Version
+    runs-on: windows-2019
+    timeout-minutes: 8
+
+    steps:
+      - uses: git9527/clean-up-action@v3
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ vars.MY_REPO_WIN }}
+          ssh-key: ${{ secrets.SSH_KEY_WIN }}
+          ref: master
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.8'
+          cache: 'pip'
+          architecture: 'x86'
+      - name: Install dependencies
+        run: pip install -r requirements-win38.txt
+
+      - name: Run tests
+        env:
+          PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
+        run: pytest tests
+
+      - name: Build binaries
+        run: cd scripts && sh common-github-build.sh "pyd" "win32"
+
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: addon-win32-abi.whl
+          path: anki_ultimate-*.whl
+
+      - name: Upload to Dropbox
+        uses: git9527/deploy-to-dropbox@v22
+        with:
+          DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
+          DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
+          DROPBOX_APP_SECRET: ${{ secrets.DROPBOX_APP_SECRET }}
+          DROPBOX_DESTINATION_PATH_PREFIX: /addon/${{ env.ADDON_VERSION }}/
+          GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
+
+      - name: Upload to CF R2
+        uses: git9527/r2-upload-action@v6
+        with:
+          r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
+          r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
+          r2-secret-access-key: ${{ vars.R2_SECRET_ACCESS_KEY }}
+          r2-bucket: ${{ vars.R2_BUCKET }}
+          glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
+          destination-dir: addon/${{ env.ADDON_VERSION }}
+
+    Verify_ABI_In_Win32:
+      needs: Build_For_Win32_38
+      timeout-minutes: 8
+      strategy:
+        matrix:
+          os: [ windows-2019, windows-2022, windows-2025 ]
+          python-version: ['3.8']
+      runs-on: ${{ matrix.os }}
+      steps:
+        - uses: git9527/clean-up-action@v3
+
+        - name: Checkout source code
+          uses: actions/checkout@v4
+          with:
+            repository: ${{ vars.MY_REPO_WIN }}
+            ssh-key: ${{ secrets.SSH_KEY_WIN }}
+            ref: master
+
+        - name: Set up Python
+          uses: actions/setup-python@v5
+          with:
+            python-version: ${{ matrix.python-version }}
+
+        - name: Retrieve build artifacts
+          uses: actions/download-artifact@v4
+          with:
+            name: addon-win32-abi.whl
+
+        - name: Verify ABI whl
+          run: cd scripts && sh verify-abi-package.sh
+
+  Build_For_Win64_38:
+    needs: Prepare_Version
+    runs-on: windows-2022
+    timeout-minutes: 8
+
+    steps:
+      - uses: git9527/clean-up-action@v3
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ vars.MY_REPO_WIN }}
+          ssh-key: ${{ secrets.SSH_KEY_WIN }}
+          ref: master
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.8'
+          cache: 'pip'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        env:
+          PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
+        run: pytest tests
+
+      - name: Build binaries
+        run: cd scripts && sh common-github-build.sh "pyd" "win_amd64"
+
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: addon-win64-abi.whl
+          path: anki_ultimate-*.whl
+
+      - name: Upload to Dropbox
+        uses: git9527/deploy-to-dropbox@v22
+        with:
+          DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
+          DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
+          DROPBOX_APP_SECRET: ${{ secrets.DROPBOX_APP_SECRET }}
+          DROPBOX_DESTINATION_PATH_PREFIX: /addon/${{ env.ADDON_VERSION }}/
+          GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
+
+      - name: Upload to CF R2
+        uses: git9527/r2-upload-action@v6
+        with:
+          r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
+          r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
+          r2-secret-access-key: ${{ vars.R2_SECRET_ACCESS_KEY }}
+          r2-bucket: ${{ vars.R2_BUCKET }}
+          glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
+          destination-dir: addon/${{ env.ADDON_VERSION }}
+
+  Verify_ABI_In_Win64:
+    needs: Build_For_Win64_38
+    timeout-minutes: 8
+    strategy:
+      matrix:
+        os: [ windows-2019, windows-2022, windows-2025 ]
+        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12', '3.13']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: git9527/clean-up-action@v3
+
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ vars.MY_REPO_WIN }}
+          ssh-key: ${{ secrets.SSH_KEY_WIN }}
+          ref: master
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Retrieve build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: addon-win64-abi.whl
+
+      - name: Verify ABI whl
+        run: cd scripts && sh verify-abi-package.sh
+
+  Build_For_Ubuntu_38:
+    needs: Prepare_Version
+    runs-on: ubuntu-22.04
+    timeout-minutes: 8
+
+    steps:
+      - uses: git9527/clean-up-action@v3
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ vars.MY_REPO_WIN }}
+          ssh-key: ${{ secrets.SSH_KEY_WIN }}
+          ref: master
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.8'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip==23
+          pip install -r requirements.txt
+
+      - name: Run tests
+        env:
+          PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
+        run: pytest tests
+
+      - name: Build binaries
+        run: cd scripts && sh common-github-build.sh "so" "manylinux2010_x86_64"
+
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: addon-linux-abi.whl
+          path: anki_ultimate-*.whl
+
+      - name: Upload to Dropbox
+        uses: git9527/deploy-to-dropbox@v22
+        with:
+          DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
+          DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
+          DROPBOX_APP_SECRET: ${{ secrets.DROPBOX_APP_SECRET }}
+          DROPBOX_DESTINATION_PATH_PREFIX: /addon/${{ env.ADDON_VERSION }}/
+          GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
+
+      - name: Upload to CF R2
+        uses: git9527/r2-upload-action@v6
+        with:
+          r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
+          r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
+          r2-secret-access-key: ${{ vars.R2_SECRET_ACCESS_KEY }}
+          r2-bucket: ${{ vars.R2_BUCKET }}
+          glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
+          destination-dir: addon/${{ env.ADDON_VERSION }}
+
+  Verify_ABI_In_Linux:
+    needs: Build_For_Ubuntu_38
+    strategy:
+      matrix:
+        os: [ ubuntu-22.04, ubuntu-24.04 ]
+        python-version: [ '3.8', '3.9', '3.10', '3.11', '3.12', '3.13' ]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 8
+    steps:
+      - uses: git9527/clean-up-action@v3
+
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ vars.MY_REPO_WIN }}
+          ssh-key: ${{ secrets.SSH_KEY_WIN }}
+          ref: master
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Retrieve build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: addon-linux-abi.whl
+
+      - name: Verify ABI whl
+        run: cd scripts && sh verify-abi-package.sh
+
+  Build_For_Mac_Intel:
+    needs: Prepare_Version
+    runs-on: macos-13
+    timeout-minutes: 8
+
+    steps:
+      - uses: git9527/clean-up-action@v3
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ vars.MY_REPO_WIN }}
+          ssh-key: ${{ secrets.SSH_KEY_WIN }}
+          ref: master
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.8'
+          cache: 'pip'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        env:
+          PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
+        run: pytest tests
+
+      - name: Build binaries
+        run: cd scripts && sh common-github-build.sh "so" "macosx_10_15_x86_64"
+
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: addon-mac-intel-abi.whl
+          path: anki_ultimate-*.whl
+
+      - name: Upload to Dropbox
+        uses: git9527/deploy-to-dropbox@v22
+        with:
+          DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
+          DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
+          DROPBOX_APP_SECRET: ${{ secrets.DROPBOX_APP_SECRET }}
+          DROPBOX_DESTINATION_PATH_PREFIX: /addon/${{ env.ADDON_VERSION }}/
+          GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
+
+      - name: Upload to CF R2
+        uses: git9527/r2-upload-action@v6
+        with:
+          r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
+          r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
+          r2-secret-access-key: ${{ vars.R2_SECRET_ACCESS_KEY }}
+          r2-bucket: ${{ vars.R2_BUCKET }}
+          glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
+          destination-dir: addon/${{ env.ADDON_VERSION }}
+
+  Verify_ABI_In_Mac_Intel:
+    needs: Build_For_Mac_Intel
+    runs-on: macos-13
+    timeout-minutes: 8
+    strategy:
+      matrix:
+        python-version: [ '3.8', '3.9', '3.10', '3.11', '3.12' ]
+    steps:
+      - uses: git9527/clean-up-action@v3
+
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ vars.MY_REPO_WIN }}
+          ssh-key: ${{ secrets.SSH_KEY_WIN }}
+          ref: master
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Retrieve build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: addon-mac-intel-abi.whl
+
+      - name: Verify ABI whl
+        run: cd scripts && sh verify-abi-package.sh
+
+  Build_For_Mac_Arm:
+    needs: Prepare_Version
+    runs-on: macos-14
+    timeout-minutes: 8
+
+    steps:
+      - uses: git9527/clean-up-action@v3
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ vars.MY_REPO_WIN }}
+          ssh-key: ${{ secrets.SSH_KEY_WIN }}
+          ref: master
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+          cache: 'pip'
+      - name: Install dependencies
+        run: pip install -r requirements-arm.txt
+
+      - name: Run tests
+        env:
+          PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
+        run: pytest tests
+
+      - name: Build binaries
+        run: cd scripts && sh common-github-build.sh "so" "macosx_11_0_arm64"
+
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: addon-mac-arm-abi.whl
+          path: anki_ultimate-*.whl
+
+      - name: Upload to Dropbox
+        uses: git9527/deploy-to-dropbox@v22
+        with:
+          DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
+          DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
+          DROPBOX_APP_SECRET: ${{ secrets.DROPBOX_APP_SECRET }}
+          DROPBOX_DESTINATION_PATH_PREFIX: /addon/${{ env.ADDON_VERSION }}/
+          GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
+
+      - name: Upload to CF R2
+        uses: git9527/r2-upload-action@v6
+        with:
+          r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
+          r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
+          r2-secret-access-key: ${{ vars.R2_SECRET_ACCESS_KEY }}
+          r2-bucket: ${{ vars.R2_BUCKET }}
+          glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
+          destination-dir: addon/${{ env.ADDON_VERSION }}
+
+  Verify_ABI_In_Mac_Arm:
+    needs: Build_For_Mac_Arm
+    strategy:
+      matrix:
+        os: [ macos-14, macos-15 ]
+        python-version: [ '3.9', '3.10', '3.11', '3.12', '3.13' ]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 8
+    steps:
+      - uses: git9527/clean-up-action@v3
+
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ vars.MY_REPO_WIN }}
+          ssh-key: ${{ secrets.SSH_KEY_WIN }}
+          ref: master
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Retrieve build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: addon-mac-arm-abi.whl
+
+      - name: Verify ABI whl
+        run: cd scripts && sh verify-abi-package.sh
+
+  Notify_Addon_Build:
+    needs: [ Verify_ABI_In_Win64 ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show current Run Id
+        run: |
+          echo "Current Run Id: ${{ github.run_id }}"
+
+      - name: Extract version
+        run: echo "ADDON_VERSION=${{ github.event.client_payload.version || github.event.inputs.version }}" >> $GITHUB_ENV
+
+      - name: Call Addon Dispatch
+        run: |
+          curl -i -X POST https://api.github.com/repos/${{ vars.ADDON_REPO_WIN }}/dispatches \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.ULTIMATE_ADDON_PERSONAL_TOKEN }}" \
+            -d '{"event_type":"lib-build-success","client_payload":{"version":"${{ env.ADDON_VERSION }}","runId":"${{ github.run_id }}"}}'
