@@ -79,7 +79,7 @@ jobs:
           glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
           destination-dir: addon/${{ env.ADDON_VERSION }}
 
-  Verify_ABI_In_Win32:
+  Verify_Win32:
     needs: Build_For_Win32_38
     timeout-minutes: 8
     strategy:
@@ -101,6 +101,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+          architecture: 'x86'
 
       - name: Retrieve build artifacts
         uses: actions/download-artifact@v4
@@ -164,7 +165,7 @@ jobs:
           glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
           destination-dir: addon/${{ env.ADDON_VERSION }}
 
-  Verify_ABI_In_Win64:
+  Verify_Win64:
     needs: Build_For_Win64_38
     timeout-minutes: 8
     strategy:
@@ -252,7 +253,7 @@ jobs:
           glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
           destination-dir: addon/${{ env.ADDON_VERSION }}
 
-  Verify_ABI_In_Linux:
+  Verify_Linux:
     needs: Build_For_Ubuntu_38
     strategy:
       matrix:
@@ -337,7 +338,7 @@ jobs:
           glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
           destination-dir: addon/${{ env.ADDON_VERSION }}
 
-  Verify_ABI_In_Mac_Intel:
+  Verify_Mac_Intel:
     needs: Build_For_Mac_Intel
     runs-on: macos-13
     timeout-minutes: 8
@@ -421,7 +422,7 @@ jobs:
           glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
           destination-dir: addon/${{ env.ADDON_VERSION }}
 
-  Verify_ABI_In_Mac_Arm:
+  Verify_Mac_Arm:
     needs: Build_For_Mac_Arm
     strategy:
       matrix:
@@ -453,7 +454,7 @@ jobs:
         run: cd scripts && sh verify-abi-package.sh
 
   Notify_Addon_Build:
-    needs: [ Verify_ABI_In_Win32, Verify_ABI_In_Win64, Verify_ABI_In_Mac_Arm, Verify_ABI_In_Mac_Intel, Verify_ABI_In_Linux ]
+    needs: [ Verify_Win32, Verify_Win64, Verify_Mac_Arm, Verify_Mac_Intel, Verify_Linux ]
     runs-on: ubuntu-latest
     steps:
       - name: Show current Run Id
