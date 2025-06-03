@@ -54,7 +54,7 @@ jobs:
         run: pytest tests
 
       - name: Build binaries
-        run: cd scripts && sh common-github-build.sh "so" "LinuxX6438"
+        run: cd scripts && sh common-github-build.sh "so" "linux-x86_64"
 
       - name: Archive build artifacts
         uses: actions/upload-artifact@v4
