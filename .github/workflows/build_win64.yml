@@ -1,4 +1,4 @@
-name: Build Windows
+name: Build Windows X64
 
 on:
   workflow_dispatch:
@@ -10,7 +10,7 @@ on:
   repository_dispatch:
     types: [ lib-repo-updated-win ]
 
-run-name: Build Win Packages with version - ${{ github.event.client_payload.version || github.event.inputs.version }}
+run-name: Build Win64 Packages with version - ${{ github.event.client_payload.version || github.event.inputs.version }}
 
 jobs:
 
