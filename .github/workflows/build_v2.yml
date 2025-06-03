@@ -79,36 +79,36 @@ jobs:
           glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
           destination-dir: addon/${{ env.ADDON_VERSION }}
 
-    Verify_ABI_In_Win32:
-      needs: Build_For_Win32_38
-      timeout-minutes: 8
-      strategy:
-        matrix:
-          os: [ windows-2019, windows-2022, windows-2025 ]
-          python-version: ['3.8']
-      runs-on: ${{ matrix.os }}
-      steps:
-        - uses: git9527/clean-up-action@v3
+  Verify_ABI_In_Win32:
+    needs: Build_For_Win32_38
+    timeout-minutes: 8
+    strategy:
+      matrix:
+        os: [ windows-2019, windows-2022, windows-2025 ]
+        python-version: ['3.8']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: git9527/clean-up-action@v3
 
-        - name: Checkout source code
-          uses: actions/checkout@v4
-          with:
-            repository: ${{ vars.MY_REPO_WIN }}
-            ssh-key: ${{ secrets.SSH_KEY_WIN }}
-            ref: master
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ vars.MY_REPO_WIN }}
+          ssh-key: ${{ secrets.SSH_KEY_WIN }}
+          ref: master
 
-        - name: Set up Python
-          uses: actions/setup-python@v5
-          with:
-            python-version: ${{ matrix.python-version }}
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
 
-        - name: Retrieve build artifacts
-          uses: actions/download-artifact@v4
-          with:
-            name: addon-win32-abi.whl
+      - name: Retrieve build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: addon-win32-abi.whl
 
-        - name: Verify ABI whl
-          run: cd scripts && sh verify-abi-package.sh
+      - name: Verify ABI whl
+        run: cd scripts && sh verify-abi-package.sh
 
   Build_For_Win64_38:
     needs: Prepare_Version
@@ -453,7 +453,7 @@ jobs:
         run: cd scripts && sh verify-abi-package.sh
 
   Notify_Addon_Build:
-    needs: [ Verify_ABI_In_Win64 ]
+    needs: [ Verify_ABI_In_Win32, Verify_ABI_In_Win64, Verify_ABI_In_Mac_Arm, Verify_ABI_In_Mac_Intel, Verify_ABI_In_Linux ]
     runs-on: ubuntu-latest
     steps:
       - name: Show current Run Id
