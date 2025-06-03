@@ -87,7 +87,7 @@ jobs:
     timeout-minutes: 8
     strategy:
       matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11']
+        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
     steps:
       - uses: git9527/clean-up-action@v3
 
@@ -109,7 +109,5 @@ jobs:
           name: addon-linux-abi.whl
 
       - name: Verify ABI whl
-        run: |
-          pip install --upgrade pip==23
-          cd scripts && sh verify-abi-package.sh
+        run: cd scripts && sh verify-abi-package.sh
 
