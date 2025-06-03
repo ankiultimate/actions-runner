@@ -80,11 +80,12 @@ jobs:
 
   Verify_ABI_In_Win64:
     needs: Build_For_Win64_38
-    runs-on: windows-2022
     timeout-minutes: 8
     strategy:
       matrix:
+        os: [ windows-2019, windows-2022, windows-2025 ]
         python-version: ['3.8', '3.9', '3.10', '3.11', '3.12', '3.13']
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: git9527/clean-up-action@v3
 

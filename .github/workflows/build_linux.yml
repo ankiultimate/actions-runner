@@ -83,11 +83,12 @@ jobs:
 
   Verify_ABI_In_Linux:
     needs: Build_For_Ubuntu_38
-    runs-on: ubuntu-22.04
-    timeout-minutes: 8
     strategy:
       matrix:
+        os: [ubuntu-22.04, ubuntu-24.04]
         python-version: ['3.8', '3.9', '3.10', '3.11', '3.12', '3.13']
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 8
     steps:
       - uses: git9527/clean-up-action@v3
 

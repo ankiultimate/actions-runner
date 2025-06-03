@@ -43,7 +43,7 @@ jobs:
           python-version: '3.9'
           cache: 'pip'
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r requirements-arm.txt
 
       - name: Run tests
         env:
@@ -80,11 +80,12 @@ jobs:
 
   Verify_ABI_In_Mac_Arm:
     needs: Build_For_Mac_Arm
-    runs-on: macos-14
-    timeout-minutes: 8
     strategy:
       matrix:
-        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
+        os: [ macos-14, macos-15 ]
+        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13' ]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 8
     steps:
       - uses: git9527/clean-up-action@v3
 
