@@ -1,4 +1,4 @@
-name: Build Linux
+name: Build Mac Arm
 
 on:
   workflow_dispatch:
@@ -10,7 +10,7 @@ on:
   repository_dispatch:
     types: [ lib-repo-updated-win ]
 
-run-name: Build Linux Packages with version - ${{ github.event.client_payload.version || github.event.inputs.version }}
+run-name: Build Mac Arm Packages with version - ${{ github.event.client_payload.version || github.event.inputs.version }}
 
 jobs:
 
@@ -24,9 +24,9 @@ jobs:
           VERSION="${{ github.event.client_payload.version }}"
           echo "version=$VERSION" >> $GITHUB_ENV
 
-  Build_For_Ubuntu_38:
+  Build_For_Mac_Arm:
     needs: Prepare_Version
-    runs-on: ubuntu-22.04
+    runs-on: macos-14
     timeout-minutes: 8
 
     steps:
@@ -40,13 +40,10 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.8'
+          python-version: '3.9'
           cache: 'pip'
-
       - name: Install dependencies
-        run: |
-          pip install --upgrade pip==23
-          pip install -r requirements.txt
+        run: pip install -r requirements.txt
 
       - name: Run tests
         env:
@@ -54,12 +51,12 @@ jobs:
         run: pytest tests
 
       - name: Build binaries
-        run: cd scripts && sh common-github-build.sh "so" "manylinux2010_x86_64"
+        run: cd scripts && sh common-github-build.sh "so" "macosx_11_0_arm64"
 
       - name: Archive build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: addon-linux-abi.whl
+          name: addon-mac-arm-abi.whl
           path: anki_ultimate-*.whl
 
       - name: Upload to Dropbox
@@ -81,13 +78,13 @@ jobs:
           glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
           destination-dir: addon/${{ env.ADDON_VERSION }}
 
-  Verify_ABI_In_Linux:
-    needs: Build_For_Ubuntu_38
-    runs-on: ubuntu-22.04
+  Verify_ABI_In_Mac_Arm:
+    needs: Build_For_Mac_Arm
+    runs-on: macos-14
     timeout-minutes: 8
     strategy:
       matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12', '3.13']
+        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
     steps:
       - uses: git9527/clean-up-action@v3
 
@@ -106,8 +103,7 @@ jobs:
       - name: Retrieve build artifacts
         uses: actions/download-artifact@v4
         with:
-          name: addon-linux-abi.whl
+          name: addon-mac-arm-abi.whl
 
       - name: Verify ABI whl
         run: cd scripts && sh verify-abi-package.sh
-
