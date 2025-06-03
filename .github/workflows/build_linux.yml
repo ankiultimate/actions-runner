@@ -109,5 +109,7 @@ jobs:
           name: addon-linux-abi.whl
 
       - name: Verify ABI whl
-        run: cd scripts && sh verify-abi-package.sh
+        run: |
+          pip install --upgrade pip==23
+          cd scripts && sh verify-abi-package.sh
 
