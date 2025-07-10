@@ -120,6 +120,54 @@ jobs:
           glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
           destination-dir: addon/${{ env.ADDON_VERSION }}
 
+  Build_For_Win64_313:
+    needs: Prepare_Version
+    runs-on: windows-2022
+    timeout-minutes: 8
+
+    steps:
+      - uses: git9527/clean-up-action@v3
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ vars.MY_REPO }}
+          ssh-key: ${{ secrets.SSH_KEY }}
+          ref: master
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        env:
+          PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
+        run: pytest tests
+
+      - name: Build binaries
+        run: cd scripts && sh common-github-build.sh "pyd" "WindowsAMD64313"
+
+      - name: Upload to Dropbox
+        uses: git9527/deploy-to-dropbox@v22
+        with:
+          DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
+          DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
+          DROPBOX_APP_SECRET: ${{ secrets.DROPBOX_APP_SECRET }}
+          DROPBOX_DESTINATION_PATH_PREFIX: /${{ env.ADDON_VERSION }}/
+          GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
+
+      - name: Upload to CF R2
+        uses: git9527/r2-upload-action@v6
+        with:
+          r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
+          r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
+          r2-secret-access-key: ${{ vars.R2_SECRET_ACCESS_KEY }}
+          r2-bucket: ${{ vars.R2_BUCKET }}
+          glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
+          destination-dir: addon/${{ env.ADDON_VERSION }}
+
   Build_For_Win32_38:
     needs: Prepare_Version
     runs-on: windows-2022
@@ -317,6 +365,57 @@ jobs:
           glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
           destination-dir: addon/${{ env.ADDON_VERSION }}
 
+  Build_For_Ubuntu_313:
+    needs: Prepare_Version
+    runs-on: ubuntu-22.04
+    timeout-minutes: 8
+
+    steps:
+      - uses: git9527/clean-up-action@v3
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ vars.MY_REPO }}
+          ssh-key: ${{ secrets.SSH_KEY }}
+          ref: master
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip==23
+          pip install -r requirements.txt
+
+      - name: Run tests
+        env:
+          PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
+        run: pytest tests
+
+      - name: Build binaries
+        run: cd scripts && sh common-github-build.sh "so" "LinuxX64313"
+
+      - name: Upload to Dropbox
+        uses: git9527/deploy-to-dropbox@v22
+        with:
+          DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
+          DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
+          DROPBOX_APP_SECRET: ${{ secrets.DROPBOX_APP_SECRET }}
+          DROPBOX_DESTINATION_PATH_PREFIX: /${{ env.ADDON_VERSION }}/
+          GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
+
+      - name: Upload to CF R2
+        uses: git9527/r2-upload-action@v6
+        with:
+          r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
+          r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
+          r2-secret-access-key: ${{ vars.R2_SECRET_ACCESS_KEY }}
+          r2-bucket: ${{ vars.R2_BUCKET }}
+          glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
+          destination-dir: addon/${{ env.ADDON_VERSION }}
+
   Build_For_Mac_38:
     needs: Prepare_Version
     runs-on: macos-13
@@ -414,7 +513,55 @@ jobs:
           glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
           destination-dir: addon/${{ env.ADDON_VERSION }}
 
-  Build_For_Mac_Arm:
+  Build_For_Mac_313:
+    needs: Prepare_Version
+    runs-on: macos-13
+    timeout-minutes: 8
+
+    steps:
+      - uses: git9527/clean-up-action@v3
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ vars.MY_REPO }}
+          ssh-key: ${{ secrets.SSH_KEY }}
+          ref: master
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        env:
+          PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
+        run: pytest tests
+
+      - name: Build binaries
+        run: cd scripts && sh common-github-build-mac.sh "so" "DarwinX64313"
+
+      - name: Upload to Dropbox
+        uses: git9527/deploy-to-dropbox@v22
+        with:
+          DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
+          DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
+          DROPBOX_APP_SECRET: ${{ secrets.DROPBOX_APP_SECRET }}
+          DROPBOX_DESTINATION_PATH_PREFIX: /${{ env.ADDON_VERSION }}/
+          GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
+
+      - name: Upload to CF R2
+        uses: git9527/r2-upload-action@v6
+        with:
+          r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
+          r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
+          r2-secret-access-key: ${{ vars.R2_SECRET_ACCESS_KEY }}
+          r2-bucket: ${{ vars.R2_BUCKET }}
+          glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
+          destination-dir: addon/${{ env.ADDON_VERSION }}
+
+  Build_For_Mac_Arm_39:
     needs: Prepare_Version
     runs-on: macos-14
     timeout-minutes: 8
@@ -463,8 +610,57 @@ jobs:
           glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
           destination-dir: addon/${{ env.ADDON_VERSION }}
 
+  Build_For_Mac_Arm_313:
+    needs: Prepare_Version
+    runs-on: macos-14
+    timeout-minutes: 8
+
+    steps:
+      - uses: git9527/clean-up-action@v3
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ vars.MY_REPO }}
+          ssh-key: ${{ secrets.SSH_KEY }}
+          ref: master
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements-arm.txt
+
+      - name: Run tests
+        env:
+          PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
+        run: pytest tests
+
+      - name: Build binaries
+        run: cd scripts && sh common-github-build-arm.sh "so" "DarwinArm64313"
+
+      - name: Upload to Dropbox
+        uses: git9527/deploy-to-dropbox@v22
+        with:
+          DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
+          DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
+          DROPBOX_APP_SECRET: ${{ secrets.DROPBOX_APP_SECRET }}
+          DROPBOX_DESTINATION_PATH_PREFIX: /${{ env.ADDON_VERSION }}/
+          GLOB_PATTERN: ${{ env.ADDON_PLATFORM }}*.*
+
+      - name: Upload to CF R2
+        uses: git9527/r2-upload-action@v6
+        with:
+          r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
+          r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
+          r2-secret-access-key: ${{ vars.R2_SECRET_ACCESS_KEY }}
+          r2-bucket: ${{ vars.R2_BUCKET }}
+          glob-pattern: ${{ env.ADDON_PLATFORM }}*.*
+          destination-dir: addon/${{ env.ADDON_VERSION }}
+
   Notify_Addon_Build:
-    needs: [Build_For_Win64_38, Build_For_Win64_39, Build_For_Win32_38, Build_For_Ubuntu_38, Build_For_Ubuntu_39, Build_For_Ubuntu_311, Build_For_Mac_38, Build_For_Mac_39, Build_For_Mac_Arm]
+    needs: [Build_For_Win64_38, Build_For_Win64_39, Build_For_Win64_313, Build_For_Win32_38, Build_For_Ubuntu_38, Build_For_Ubuntu_39, Build_For_Ubuntu_311, Build_For_Mac_38, Build_For_Mac_39, Build_For_Mac_313, Build_For_Mac_Arm_39, Build_For_Mac_Arm_313]
     runs-on: ubuntu-latest
     steps:
       - name: Extract version
