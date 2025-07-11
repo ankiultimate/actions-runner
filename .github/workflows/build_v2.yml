@@ -171,7 +171,7 @@ jobs:
     strategy:
       matrix:
         os: [ windows-2022, windows-2025 ]
-        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12', '3.13']
+        python-version: ['3.8', '3.9', '3.13']
     runs-on: ${{ matrix.os }}
     steps:
       - uses: git9527/clean-up-action@v3
@@ -258,7 +258,7 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-22.04, ubuntu-24.04 ]
-        python-version: [ '3.8', '3.9', '3.10', '3.11', '3.12', '3.13' ]
+        python-version: [ '3.8', '3.9', '3.13' ]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 8
     steps:
@@ -344,7 +344,7 @@ jobs:
     timeout-minutes: 8
     strategy:
       matrix:
-        python-version: [ '3.8', '3.9', '3.10', '3.11', '3.12', '3.13' ]
+        python-version: [ '3.8', '3.9', '3.13' ]
     steps:
       - uses: git9527/clean-up-action@v3
 
@@ -427,7 +427,7 @@ jobs:
     strategy:
       matrix:
         os: [ macos-14, macos-15 ]
-        python-version: [ '3.9', '3.10', '3.11', '3.12', '3.13' ]
+        python-version: [ '3.9', '3.13' ]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 8
     steps:
