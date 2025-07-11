@@ -26,7 +26,7 @@ jobs:
 
   Build_For_Win32_38:
     needs: Prepare_Version
-    runs-on: windows-2019
+    runs-on: windows-2022
     timeout-minutes: 8
 
     steps:
@@ -84,7 +84,7 @@ jobs:
     timeout-minutes: 8
     strategy:
       matrix:
-        os: [ windows-2019, windows-2022, windows-2025 ]
+        os: [ windows-2022, windows-2025 ]
         python-version: ['3.8']
     runs-on: ${{ matrix.os }}
     steps:
@@ -170,7 +170,7 @@ jobs:
     timeout-minutes: 8
     strategy:
       matrix:
-        os: [ windows-2019, windows-2022, windows-2025 ]
+        os: [ windows-2022, windows-2025 ]
         python-version: ['3.8', '3.9', '3.10', '3.11', '3.12', '3.13']
     runs-on: ${{ matrix.os }}
     steps:
