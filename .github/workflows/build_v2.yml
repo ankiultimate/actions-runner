@@ -49,7 +49,7 @@ jobs:
       - name: Run tests
         env:
           PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
-        run: pytest tests
+        run: pytest -s tests
 
       - name: Build binaries
         run: cd scripts && sh common-github-build.sh "pyd" "win32"
@@ -135,7 +135,7 @@ jobs:
       - name: Run tests
         env:
           PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
-        run: pytest tests
+        run: pytest -s tests
 
       - name: Build binaries
         run: cd scripts && sh common-github-build.sh "pyd" "win_amd64"
@@ -223,7 +223,7 @@ jobs:
       - name: Run tests
         env:
           PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
-        run: pytest tests
+        run: pytest -s tests
 
       - name: Build binaries
         run: cd scripts && sh common-github-build.sh "so" "manylinux2010_x86_64"
@@ -308,7 +308,7 @@ jobs:
       - name: Run tests
         env:
           PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
-        run: pytest tests
+        run: pytest -s tests
 
       - name: Build binaries
         run: cd scripts && sh common-github-build.sh "so" "macosx_10_15_x86_64"
@@ -392,7 +392,7 @@ jobs:
       - name: Run tests
         env:
           PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: 'python'
-        run: pytest tests
+        run: pytest -s tests
 
       - name: Build binaries
         run: cd scripts && sh common-github-build.sh "so" "macosx_11_0_arm64"
