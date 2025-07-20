@@ -8,7 +8,7 @@ on:
         default: "latest"
 
   repository_dispatch:
-    types: [ lib-repo-updated-all ]
+    types: [ lib-repo-updated-abi ]
 
 run-name: Build Abi Packages with version - ${{ github.event.client_payload.version || github.event.inputs.version }}
 
