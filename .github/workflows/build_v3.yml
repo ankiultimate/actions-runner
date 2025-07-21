@@ -45,10 +45,10 @@ jobs:
           dropbox_app_key: ${{ secrets.DROPBOX_APP_KEY }}
           dropbox_app_secret: ${{ secrets.DROPBOX_APP_SECRET }}
 
-          r2_account_id: ${{ secrets.R2_ACCOUNT_ID }}
-          r2_access_key_id: ${{ secrets.R2_ACCESS_KEY_ID }}
-          r2_secret_access_key: ${{ secrets.R2_SECRET_ACCESS_KEY }}
-          r2_bucket: ${{ secrets.R2_BUCKET }}
+          r2_account_id: ${{ vars.R2_ACCOUNT_ID }}
+          r2_access_key_id: ${{ vars.R2_ACCESS_KEY_ID }}
+          r2_secret_access_key: ${{ vars.R2_SECRET_ACCESS_KEY }}
+          r2_bucket: ${{ vars.R2_BUCKET }}
 
 
   Build_For_Mac_Intel_39:
@@ -74,7 +74,7 @@ jobs:
           dropbox_app_key: ${{ secrets.DROPBOX_APP_KEY }}
           dropbox_app_secret: ${{ secrets.DROPBOX_APP_SECRET }}
 
-          r2_account_id: ${{ secrets.R2_ACCOUNT_ID }}
-          r2_access_key_id: ${{ secrets.R2_ACCESS_KEY_ID }}
-          r2_secret_access_key: ${{ secrets.R2_SECRET_ACCESS_KEY }}
-          r2_bucket: ${{ secrets.R2_BUCKET }}
+          r2_account_id: ${{ vars.R2_ACCOUNT_ID }}
+          r2_access_key_id: ${{ vars.R2_ACCESS_KEY_ID }}
+          r2_secret_access_key: ${{ vars.R2_SECRET_ACCESS_KEY }}
+          r2_bucket: ${{ vars.R2_BUCKET }}
