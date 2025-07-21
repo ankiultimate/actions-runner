@@ -35,7 +35,6 @@ jobs:
       - name: Common Build Process
         uses: ./.github/actions/upload-files
         with:
-          addon_version: ${{ env.ADDON_VERSION }}
           addon_platform: "DarwinX6438"
           target_extension: "so"
           python_version: "3.8"
@@ -65,7 +64,6 @@ jobs:
       - name: Common Build Process
         uses: ./.github/actions/upload-files
         with:
-          addon_version: ${{ env.ADDON_VERSION }}
           addon_platform: "DarwinX6439"
           target_extension: "so"
           python_version: "3.9"
