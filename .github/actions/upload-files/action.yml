@@ -86,3 +86,6 @@ runs:
         r2-bucket: ${{ inputs.r2_bucket }}
         glob-pattern: ${{ inputs.addon_platform }}*.*
         destination-dir: addon/${{ env.ADDON_VERSION }}
+
+    - name: Action Checkout for post-build steps
+      uses: actions/checkout@v4
