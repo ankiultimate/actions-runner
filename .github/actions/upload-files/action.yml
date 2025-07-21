@@ -19,17 +19,42 @@ inputs:
     description: "Path to the requirements file, default is 'requirements.txt'"
     default: 'requirements.txt'
 
+  # repo
+  my_repo:
+    required: true
+
+  # secrets (显式传入)
+  ssh_key:
+    required: true
+
+  dropbox_refresh_token:
+    required: true
+  dropbox_app_key:
+    required: true
+  dropbox_app_secret:
+    required: true
+
+  r2_account_id:
+    required: true
+  r2_access_key_id:
+    required: true
+  r2_secret_access_key:
+    required: true
+  r2_bucket:
+    required: true
+
 runs:
 
   using: "composite"
 
   steps:
     - uses: git9527/clean-up-action@v3
+
     - name: Checkout source code
       uses: actions/checkout@v4
       with:
-        repository: ${{ vars.MY_REPO }}
-        ssh-key: ${{ secrets.SSH_KEY }}
+        repository: ${{ inputs.my_repo }}
+        ssh-key: ${{ inputs.ssh_key }}
         ref: master
 
     - name: Set up Python
@@ -49,18 +74,18 @@ runs:
     - name: Upload to Dropbox
       uses: git9527/deploy-to-dropbox@v22
       with:
-        DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
-        DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
-        DROPBOX_APP_SECRET: ${{ secrets.DROPBOX_APP_SECRET }}
+        DROPBOX_REFRESH_TOKEN: ${{ inputs.dropbox_refresh_token }}
+        DROPBOX_APP_KEY: ${{ inputs.dropbox_app_key }}
+        DROPBOX_APP_SECRET: ${{ inputs.dropbox_app_secret }}
         DROPBOX_DESTINATION_PATH_PREFIX: /addon/${{ inputs.addon_version }}/
         GLOB_PATTERN: ${{ inputs.addon_platform }}*.*
 
     - name: Upload to CF R2
       uses: git9527/r2-upload-action@v6
       with:
-        r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
-        r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
-        r2-secret-access-key: ${{ vars.R2_SECRET_ACCESS_KEY }}
-        r2-bucket: ${{ vars.R2_BUCKET }}
+        r2-account-id: ${{ inputs.r2_account_id }}
+        r2-access-key-id: ${{ inputs.r2_access_key_id }}
+        r2-secret-access-key: ${{ inputs.r2_secret_access_key }}
+        r2-bucket: ${{ inputs.r2_bucket }}
         glob-pattern: ${{ inputs.addon_platform }}*.*
         destination-dir: addon/${{ inputs.addon_version }}
