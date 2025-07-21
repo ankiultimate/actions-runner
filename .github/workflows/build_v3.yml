@@ -30,7 +30,7 @@ jobs:
 
     steps:
       - name: Upload all files
-        uses: ./.github/actions/upload-files
+        uses: ./.github/actions/upload-files/action.yml
         with:
           addon_version: ${{ env.ADDON_VERSION }}
           addon_platform: "DarwinX6438"
@@ -46,7 +46,7 @@ jobs:
 
     steps:
       - name: Upload all files
-        uses: ./.github/actions/upload-files
+        uses: ./.github/actions/upload-files/action.yml
         with:
           addon_version: ${{ env.ADDON_VERSION }}
           addon_platform: "DarwinX6439"
@@ -62,7 +62,7 @@ jobs:
 
     steps:
       - name: Upload all files
-        uses: ./.github/actions/upload-files
+        uses: ./.github/actions/upload-files/action.yml
         with:
           addon_version: ${{ env.ADDON_VERSION }}
           addon_platform: "DarwinX64313"
