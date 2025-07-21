@@ -46,7 +46,6 @@ runs:
   using: "composite"
 
   steps:
-    - uses: git9527/clean-up-action@v3
 
     - name: Checkout source code
       uses: actions/checkout@v4
@@ -86,4 +85,4 @@ runs:
         r2-secret-access-key: ${{ inputs.r2_secret_access_key }}
         r2-bucket: ${{ inputs.r2_bucket }}
         glob-pattern: ${{ inputs.addon_platform }}*.*
-        destination-dir: addon/${{ env.ADDON_VERSION }}/
+        destination-dir: addon/${{ env.ADDON_VERSION }}
