@@ -40,8 +40,8 @@ jobs:
           target_extension: "so"
           python_version: "3.8"
           requirements_file: "requirements.txt"
-          my_repo: ${{ vars.MY_REPO }}
-          ssh_key: ${{ secrets.SSH_KEY }}
+          my_repo: ${{ vars.MY_REPO_WIN }}
+          ssh_key: ${{ secrets.SSH_KEY_WIN }}
           dropbox_refresh_token: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
           dropbox_app_key: ${{ secrets.DROPBOX_APP_KEY }}
           dropbox_app_secret: ${{ secrets.DROPBOX_APP_SECRET }}
@@ -70,37 +70,8 @@ jobs:
           target_extension: "so"
           python_version: "3.9"
           requirements_file: "requirements.txt"
-          my_repo: ${{ vars.MY_REPO }}
-          ssh_key: ${{ secrets.SSH_KEY }}
-          dropbox_refresh_token: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
-          dropbox_app_key: ${{ secrets.DROPBOX_APP_KEY }}
-          dropbox_app_secret: ${{ secrets.DROPBOX_APP_SECRET }}
-
-          r2_account_id: ${{ secrets.R2_ACCOUNT_ID }}
-          r2_access_key_id: ${{ secrets.R2_ACCESS_KEY_ID }}
-          r2_secret_access_key: ${{ secrets.R2_SECRET_ACCESS_KEY }}
-          r2_bucket: ${{ secrets.R2_BUCKET }}
-
-  Build_For_Mac_Intel_313:
-
-    needs: Prepare_Version
-    runs-on: macos-13
-    timeout-minutes: 8
-
-    steps:
-      - name: Action Checkout
-        uses: actions/checkout@v4
-
-      - name: Common Build Process
-        uses: ./.github/actions/upload-files
-        with:
-          addon_version: ${{ env.ADDON_VERSION }}
-          addon_platform: "DarwinX64313"
-          target_extension: "so"
-          python_version: "3.13"
-          requirements_file: "requirements.txt"
-          my_repo: ${{ vars.MY_REPO }}
-          ssh_key: ${{ secrets.SSH_KEY }}
+          my_repo: ${{ vars.MY_REPO_WIN }}
+          ssh_key: ${{ secrets.SSH_KEY_WIN }}
           dropbox_refresh_token: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
           dropbox_app_key: ${{ secrets.DROPBOX_APP_KEY }}
           dropbox_app_secret: ${{ secrets.DROPBOX_APP_SECRET }}
