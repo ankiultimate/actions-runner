@@ -1,0 +1,66 @@
+name: Check out, Build and Upload Artifacts
+description: Common action to check out the repository, build the addon, and upload artifacts to Dropbox and Cloudflare R2.
+
+inputs:
+  addon_version:
+    required: true
+    description: "Version of the addon to upload, e.g., v1.0.0"
+  addon_platform:
+    required: true
+    description: "Platform of the addon, e.g., MacArm64, MacX64, LinuxX64, WinX64"
+  target_extension:
+    required: false
+    description: "Target extension to build, e.g., 'so' for shared object files, 'pyd' for Windows DLLs"
+  python_version:
+    required: false
+    description: "Python version to use"
+  requirements_file:
+    required: false
+    description: "Path to the requirements file, default is 'requirements.txt'"
+    default: 'requirements.txt'
+
+runs:
+
+  using: "composite"
+
+  steps:
+    - uses: git9527/clean-up-action@v3
+    - name: Checkout source code
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ vars.MY_REPO }}
+        ssh-key: ${{ secrets.SSH_KEY }}
+        ref: master
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python_version }}
+        cache: 'pip'
+
+    - name: Install dependencies
+      shell: bash
+      run: pip install -r ${{ inputs.requirements_file }}
+
+    - name: Build binaries
+      shell: bash
+      run: cd scripts && sh github-build.sh ${{ inputs.target_extension }} ${{ inputs.addon_platform }}
+
+    - name: Upload to Dropbox
+      uses: git9527/deploy-to-dropbox@v22
+      with:
+        DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
+        DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
+        DROPBOX_APP_SECRET: ${{ secrets.DROPBOX_APP_SECRET }}
+        DROPBOX_DESTINATION_PATH_PREFIX: /addon/${{ inputs.addon_version }}/
+        GLOB_PATTERN: ${{ inputs.addon_platform }}*.*
+
+    - name: Upload to CF R2
+      uses: git9527/r2-upload-action@v6
+      with:
+        r2-account-id: ${{ vars.R2_ACCOUNT_ID }}
+        r2-access-key-id: ${{ vars.R2_ACCESS_KEY_ID }}
+        r2-secret-access-key: ${{ vars.R2_SECRET_ACCESS_KEY }}
+        r2-bucket: ${{ vars.R2_BUCKET }}
+        glob-pattern: ${{ inputs.addon_platform }}*.*
+        destination-dir: addon/${{ inputs.addon_version }}
