@@ -1,4 +1,4 @@
-name: Build All Abi Packages
+name: Build All Packages with ABI3
 
 on:
   workflow_dispatch:
@@ -284,7 +284,7 @@ jobs:
       - name: Verify ABI whl
         run: cd scripts && sh verify-abi-package.sh
 
-  Build_For_Mac_Intel:
+  Build_For_Mac_Intel_38:
     needs: Prepare_Version
     runs-on: macos-13
     timeout-minutes: 8
@@ -339,7 +339,7 @@ jobs:
           destination-dir: addon/${{ env.ADDON_VERSION }}
 
   Verify_Mac_Intel:
-    needs: Build_For_Mac_Intel
+    needs: Build_For_Mac_Intel_38
     runs-on: macos-13
     timeout-minutes: 8
     strategy:
@@ -368,7 +368,7 @@ jobs:
       - name: Verify ABI whl
         run: cd scripts && sh verify-abi-package.sh
 
-  Build_For_Mac_Arm:
+  Build_For_Mac_Arm_39:
     needs: Prepare_Version
     runs-on: macos-14
     timeout-minutes: 8
@@ -423,7 +423,7 @@ jobs:
           destination-dir: addon/${{ env.ADDON_VERSION }}
 
   Verify_Mac_Arm:
-    needs: Build_For_Mac_Arm
+    needs: Build_For_Mac_Arm_39
     strategy:
       matrix:
         os: [ macos-14, macos-15 ]
